@@ -3,7 +3,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>dev.selimhorri.tesseract</groupId>
+    <groupId>io.github.selimhorri</groupId>
     <artifactId>tesseract-starter-jps</artifactId>
     <version>1.0.0</version>
     <name>tesseract-starter-jps</name>
@@ -41,12 +41,12 @@
                 <scope>import</scope>
             </dependency>
             <dependency>
-                <groupId>dev.selimhorri.tesseract</groupId>
+                <groupId>io.github.selimhorri</groupId>
                 <artifactId>tesseract-sync</artifactId>
                 <version>1.0.0</version>
             </dependency>
             <dependency>
-                <groupId>dev.selimhorri.tesseract</groupId>
+                <groupId>io.github.selimhorri</groupId>
                 <artifactId>tesseract-async</artifactId>
                 <version>1.0.0</version>
             </dependency>
@@ -55,12 +55,12 @@
 
     <dependencies>
         <dependency>
-            <groupId>dev.selimhorri.tesseract</groupId>
+            <groupId>io.github.selimhorri</groupId>
             <artifactId>tesseract-sync</artifactId>
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>dev.selimhorri.tesseract</groupId>
+            <groupId>io.github.selimhorri</groupId>
             <artifactId>tesseract-async</artifactId>
             <optional>true</optional>
         </dependency>

@@ -9,7 +9,7 @@ To use Tesseract Async in your Maven project, add the following dependency:
 ```xml
 
 <dependency>
-    <groupId>dev.selimhorri.tesseract</groupId>
+    <groupId>io.github.selimhorri</groupId>
     <artifactId>tesseract-async</artifactId>
     <version>1.0.0</version>
 </dependency>
