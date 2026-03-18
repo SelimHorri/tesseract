@@ -10,23 +10,11 @@
     </parent>
     <artifactId>tesseract-async</artifactId>
     <name>tesseract-async</name>
-    <description>async lib</description>
+    <description>Tesseract Sync Library for easily creating asynchronous Spring HTTP Clients</description>
     <packaging>jar</packaging>
-
-    <url/>
-    <licenses>
-        <license/>
-    </licenses>
-    <developers>
-        <developer/>
-    </developers>
-    <scm>
-        <connection/>
-        <developerConnection/>
-        <tag/>
-        <url/>
-    </scm>
-
+    
+    <url>https://github.com/SelimHorri/tesseract/tesseract-parent/tesseract-async</url>
+    
     <dependencies>
         <dependency>
             <groupId>io.github.selimhorri</groupId>
@@ -47,12 +35,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webflux</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <scope>runtime</scope>
-            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>io.micrometer</groupId>
@@ -80,7 +62,7 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
+    
     <build>
         <plugins>
             <plugin>
@@ -121,5 +103,5 @@
             </plugin>
         </plugins>
     </build>
-
+    
 </project>

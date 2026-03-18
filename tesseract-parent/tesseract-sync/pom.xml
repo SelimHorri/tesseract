@@ -10,22 +10,10 @@
     </parent>
     <artifactId>tesseract-sync</artifactId>
     <name>tesseract-sync</name>
-    <description>sync lib</description>
+    <description>Tesseract Sync Library for easily creating synchronous Spring HTTP Clients</description>
     <packaging>jar</packaging>
-
-    <url/>
-    <licenses>
-        <license/>
-    </licenses>
-    <developers>
-        <developer/>
-    </developers>
-    <scm>
-        <connection/>
-        <developerConnection/>
-        <tag/>
-        <url/>
-    </scm>
+    
+    <url>https://github.com/SelimHorri/tesseract/tesseract-parent/tesseract-sync</url>
     
     <dependencies>
         <dependency>
@@ -47,12 +35,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webmvc</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <scope>runtime</scope>
-            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>io.micrometer</groupId>
@@ -79,7 +61,7 @@
             <artifactId>spring-boot-starter-webmvc-test</artifactId>
         </dependency>
     </dependencies>
-
+    
     <build>
         <plugins>
             <plugin>
@@ -120,5 +102,5 @@
             </plugin>
         </plugins>
     </build>
-
+    
 </project>

@@ -10,22 +10,10 @@
     </parent>
     <artifactId>tesseract-core</artifactId>
     <name>tesseract-core</name>
-    <description>Demo project for Spring Boot</description>
+    <description>Tesseract Core Library for shared configurations and property definitions</description>
     <packaging>jar</packaging>
     
-    <url/>
-    <licenses>
-        <license/>
-    </licenses>
-    <developers>
-        <developer/>
-    </developers>
-    <scm>
-        <connection/>
-        <developerConnection/>
-        <tag/>
-        <url/>
-    </scm>
+    <url>https://github.com/SelimHorri/tesseract/tesseract-parent/tesseract-core</url>
     
     <dependencies>
         <dependency>
@@ -47,7 +35,7 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
+    
     <build>
         <plugins>
             <plugin>
@@ -88,5 +76,5 @@
             </plugin>
         </plugins>
     </build>
-
+    
 </project>
