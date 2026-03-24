@@ -100,7 +100,7 @@ class HttpClientsConfigTest {
 	}
 	
 	@Test
-	void shouldRegisterRestClientBean() {
+	void shouldRegisterDefaultRestClientBean() {
 		withDefaultProps().run(context -> assertThat(context).hasSingleBean(RestClient.class));
 	}
 	
@@ -110,7 +110,7 @@ class HttpClientsConfigTest {
 	}
 	
 	@Test
-	void restClientBeanShouldNotBeNull() {
+	void defaultRestClientBeanShouldNotBeNull() {
 		withDefaultProps().run(context -> {
 			RestClient restClient = context.getBean(RestClient.class);
 			assertThat(restClient).isNotNull();
@@ -192,8 +192,8 @@ class HttpClientsConfigTest {
 	}
 	
 	@Test
-	void restClientBeanNameShouldBeRestClient() {
-		withDefaultProps().run(context -> assertThat(context).hasBean("restClient"));
+	void restClientBeanNameShouldBeDefaultRestClient() {
+		withDefaultProps().run(context -> assertThat(context).hasBean("defaultRestClient"));
 	}
 	
 	@Test

@@ -100,7 +100,7 @@ class HttpClientsConfigTest {
 	}
 	
 	@Test
-	void shouldRegisterWebClientBean() {
+	void shouldRegisterDefaultWebClientBean() {
 		withDefaultProps().run(context -> assertThat(context).hasSingleBean(WebClient.class));
 	}
 	
@@ -110,7 +110,7 @@ class HttpClientsConfigTest {
 	}
 	
 	@Test
-	void webClientBeanShouldNotBeNull() {
+	void defaultWebClientBeanShouldNotBeNull() {
 		withDefaultProps().run(context -> {
 			WebClient webClient = context.getBean(WebClient.class);
 			assertThat(webClient).isNotNull();
@@ -192,8 +192,8 @@ class HttpClientsConfigTest {
 	}
 	
 	@Test
-	void webClientBeanNameShouldBeWebClient() {
-		withDefaultProps().run(context -> assertThat(context).hasBean("webClient"));
+	void webClientBeanNameShouldBeDefaultWebClient() {
+		withDefaultProps().run(context -> assertThat(context).hasBean("defaultWebClient"));
 	}
 	
 	@Test

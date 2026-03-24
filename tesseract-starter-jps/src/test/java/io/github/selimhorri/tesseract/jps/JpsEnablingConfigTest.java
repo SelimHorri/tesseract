@@ -13,13 +13,13 @@ class JpsEnablingConfigTest {
 	
 	@Test
 	void shouldRegisterJpsPropsBean() {
-		contextRunner.run(context -> assertThat(context).hasSingleBean(JpsProps.class));
+		contextRunner.run(context -> assertThat(context).hasSingleBean(JpsClientProps.class));
 	}
 	
 	@Test
 	void jpsPropsBeanShouldNotBeNull() {
 		contextRunner.run(context -> {
-			JpsProps props = context.getBean(JpsProps.class);
+			JpsClientProps props = context.getBean(JpsClientProps.class);
 			assertThat(props).isNotNull();
 		});
 	}
@@ -27,7 +27,7 @@ class JpsEnablingConfigTest {
 	@Test
 	void shouldBindDefaultBaseUrl() {
 		contextRunner.run(context -> {
-			JpsProps props = context.getBean(JpsProps.class);
+			JpsClientProps props = context.getBean(JpsClientProps.class);
 			assertThat(props.baseUrl()).isEqualTo("https://jsonplaceholder.typicode.com");
 		});
 	}
@@ -37,7 +37,7 @@ class JpsEnablingConfigTest {
 		contextRunner
 				.withPropertyValues("tesseract.jps.base-url=https://custom.api.example.com")
 				.run(context -> {
-					JpsProps props = context.getBean(JpsProps.class);
+					JpsClientProps props = context.getBean(JpsClientProps.class);
 					assertThat(props.baseUrl()).isEqualTo("https://custom.api.example.com");
 				});
 	}

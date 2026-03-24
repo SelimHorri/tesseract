@@ -9,9 +9,9 @@ import java.util.Set;
 
 @ConfigurationProperties(prefix = "tesseract.zitadel")
 @Validated
-public record ZitadelProps(@DefaultValue("http://127.0.0.1:8080") String baseUrl, Set<String> publicUris) {
+public record ZitadelClientProps(@DefaultValue("http://127.0.0.1:8080") String baseUrl, Set<String> publicUris) {
 	
-	public ZitadelProps {
+	public ZitadelClientProps {
 		publicUris = Set.copyOf(Objects.requireNonNullElseGet(publicUris, Set::of));
 	}
 	

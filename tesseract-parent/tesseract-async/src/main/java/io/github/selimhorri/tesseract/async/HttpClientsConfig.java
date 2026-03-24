@@ -17,7 +17,7 @@ class HttpClientsConfig {
 	
 	@Primary
 	@Bean
-	WebClient webClient(WebClient.Builder webClientBuilder, HttpClientProps clientProps) {
+	WebClient defaultWebClient(WebClient.Builder webClientBuilder, HttpClientProps clientProps) {
 		return webClientBuilder
 				.clientConnector(ClientHttpConnectorBuilder.jdk()
 						.withHttpClientCustomizer(httpClientBuilder -> httpClientBuilder

@@ -12,11 +12,11 @@ import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 @AutoConfiguration
 class AsyncHttpClientsConfig {
 	
-	@ConditionalOnBean(name = "webClient")
+	@ConditionalOnBean(name = "defaultWebClient")
 	@Bean
-	WebClient jpsWebClient(WebClient webClient, JpsProps jpsProps) {
+	WebClient jpsWebClient(WebClient webClient, JpsClientProps clientProps) {
 		return webClient.mutate()
-				.baseUrl(jpsProps.baseUrl())
+				.baseUrl(clientProps.baseUrl())
 				.build();
 	}
 	

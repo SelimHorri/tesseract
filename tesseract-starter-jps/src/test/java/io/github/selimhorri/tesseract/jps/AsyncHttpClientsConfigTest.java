@@ -14,7 +14,7 @@ class AsyncHttpClientsConfigTest {
 			.withConfiguration(AutoConfigurations.of(JpsEnablingConfig.class, AsyncHttpClientsConfig.class));
 	
 	@Test
-	void shouldNotRegisterJpsBeansWhenNoWebClientPresent() {
+	void shouldNotRegisterJpsBeansWhenNoDefaultWebClientPresent() {
 		contextRunner.run(context -> {
 			assertThat(context).doesNotHaveBean("jpsWebClient");
 			assertThat(context).doesNotHaveBean("jpsProxyFactory");
@@ -22,14 +22,14 @@ class AsyncHttpClientsConfigTest {
 	}
 	
 	@Test
-	void shouldNotRegisterHttpServiceProxyFactoryWhenNoWebClientPresent() {
+	void shouldNotRegisterHttpServiceProxyFactoryWhenNoDefaultWebClientPresent() {
 		contextRunner.run(context -> assertThat(context).doesNotHaveBean(HttpServiceProxyFactory.class));
 	}
 	
 	@Test
-	void shouldRegisterJpsWebClientWhenWebClientBeanPresent() {
+	void shouldRegisterJpsWebClientWhenDefaultWebClientBeanPresent() {
 		contextRunner
-				.withBean("webClient", WebClient.class, WebClient::create)
+				.withBean("defaultWebClient", WebClient.class, WebClient::create)
 				.run(context -> {
 					assertThat(context).hasNotFailed();
 					assertThat(context).hasBean("jpsWebClient");
@@ -37,9 +37,9 @@ class AsyncHttpClientsConfigTest {
 	}
 	
 	@Test
-	void shouldRegisterJpsProxyFactoryWhenWebClientBeanPresent() {
+	void shouldRegisterJpsProxyFactoryWhenDefaultWebClientBeanPresent() {
 		contextRunner
-				.withBean("webClient", WebClient.class, WebClient::create)
+				.withBean("defaultWebClient", WebClient.class, WebClient::create)
 				.run(context -> {
 					assertThat(context).hasNotFailed();
 					assertThat(context).hasBean("jpsProxyFactory");
@@ -47,9 +47,9 @@ class AsyncHttpClientsConfigTest {
 	}
 	
 	@Test
-	void jpsWebClientBeanShouldNotBeNull() {
+	void jpsDefaultWebClientBeanShouldNotBeNull() {
 		contextRunner
-				.withBean("webClient", WebClient.class, WebClient::create)
+				.withBean("defaultWebClient", WebClient.class, WebClient::create)
 				.run(context -> {
 					WebClient jpsWebClient = context.getBean("jpsWebClient", WebClient.class);
 					assertThat(jpsWebClient).isNotNull();
@@ -59,7 +59,7 @@ class AsyncHttpClientsConfigTest {
 	@Test
 	void jpsProxyFactoryBeanShouldNotBeNull() {
 		contextRunner
-				.withBean("webClient", WebClient.class, WebClient::create)
+				.withBean("defaultWebClient", WebClient.class, WebClient::create)
 				.run(context -> {
 					HttpServiceProxyFactory factory = context.getBean("jpsProxyFactory", HttpServiceProxyFactory.class);
 					assertThat(factory).isNotNull();
@@ -67,37 +67,37 @@ class AsyncHttpClientsConfigTest {
 	}
 	
 	@Test
-	void shouldConfigureJpsWebClientWithDefaultBaseUrl() {
+	void shouldConfigureJpsDefaultWebClientWithDefaultBaseUrl() {
 		contextRunner
-				.withBean("webClient", WebClient.class, WebClient::create)
+				.withBean("defaultWebClient", WebClient.class, WebClient::create)
 				.run(context -> {
 					assertThat(context).hasNotFailed();
 					assertThat(context).hasBean("jpsWebClient");
-					JpsProps props = context.getBean(JpsProps.class);
+					JpsClientProps props = context.getBean(JpsClientProps.class);
 					assertThat(props.baseUrl()).isEqualTo("https://jsonplaceholder.typicode.com");
 				});
 	}
 	
 	@Test
-	void shouldConfigureJpsWebClientWithCustomBaseUrl() {
+	void shouldConfigureJpsDefaultWebClientWithCustomBaseUrl() {
 		contextRunner
-				.withBean("webClient", WebClient.class, WebClient::create)
+				.withBean("defaultWebClient", WebClient.class, WebClient::create)
 				.withPropertyValues("tesseract.jps.base-url=https://custom.api.example.com")
 				.run(context -> {
 					assertThat(context).hasNotFailed();
 					assertThat(context).hasBean("jpsWebClient");
-					JpsProps props = context.getBean(JpsProps.class);
+					JpsClientProps props = context.getBean(JpsClientProps.class);
 					assertThat(props.baseUrl()).isEqualTo("https://custom.api.example.com");
 				});
 	}
 	
 	@Test
-	void shouldLoadFullContextWithWebClientAndDefaultProps() {
+	void shouldLoadFullContextWithDefaultWebClientAndDefaultProps() {
 		contextRunner
-				.withBean("webClient", WebClient.class, WebClient::create)
+				.withBean("defaultWebClient", WebClient.class, WebClient::create)
 				.run(context -> {
 					assertThat(context).hasNotFailed();
-					assertThat(context).hasSingleBean(JpsProps.class);
+					assertThat(context).hasSingleBean(JpsClientProps.class);
 					assertThat(context).hasBean("jpsWebClient");
 					assertThat(context).hasBean("jpsProxyFactory");
 				});

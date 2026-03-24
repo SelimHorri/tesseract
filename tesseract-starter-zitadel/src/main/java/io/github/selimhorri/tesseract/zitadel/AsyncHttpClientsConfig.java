@@ -12,12 +12,12 @@ import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 @AutoConfiguration
 class AsyncHttpClientsConfig {
 	
-	@ConditionalOnBean(name = "webClient")
+	@ConditionalOnBean(name = "defaultWebClient")
 	@Bean
-	WebClient zitadelWebClient(WebClient webClient, ZitadelProps zitadelProps) {
+	WebClient zitadelWebClient(WebClient webClient, ZitadelClientProps clientProps) {
 		return webClient.mutate()
-				.baseUrl(zitadelProps.baseUrl())
-				//.requestInterceptor(new DefaultClientHttpRequestInterceptor<>(zitadelProps, null)) // TODO: implement interceptor for reactive
+				.baseUrl(clientProps.baseUrl())
+				.filter(new DefaultClientHttpRequestInterceptor<>(clientProps, null)) // TODO: Add interceptor logic
 				.build();
 	}
 	

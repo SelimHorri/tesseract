@@ -12,12 +12,12 @@ import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 @AutoConfiguration
 class SyncHttpClientsConfig {
 	
-	@ConditionalOnBean(name = "restClient")
+	@ConditionalOnBean(name = "defaultRestClient")
 	@Bean
-	RestClient zitadelRestClient(RestClient restClient, ZitadelProps zitadelProps) {
+	RestClient zitadelRestClient(RestClient restClient, ZitadelClientProps clientProps) {
 		return restClient.mutate()
-				.baseUrl(zitadelProps.baseUrl())
-				.requestInterceptor(new DefaultClientHttpRequestInterceptor<>(zitadelProps, null))
+				.baseUrl(clientProps.baseUrl())
+				.requestInterceptor(new DefaultClientHttpRequestInterceptor<>(clientProps, null)) // TODO: Add interceptor logic
 				.build();
 	}
 	

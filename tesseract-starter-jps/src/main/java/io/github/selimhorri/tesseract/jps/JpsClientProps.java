@@ -6,5 +6,5 @@ import org.springframework.validation.annotation.Validated;
 
 @ConfigurationProperties(prefix = "tesseract.jps")
 @Validated
-public record JpsProps(@DefaultValue("https://jsonplaceholder.typicode.com") String baseUrl) {}
+public record JpsClientProps(@DefaultValue("https://jsonplaceholder.typicode.com") String baseUrl) {}
 

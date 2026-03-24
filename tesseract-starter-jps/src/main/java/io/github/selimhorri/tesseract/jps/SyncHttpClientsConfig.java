@@ -12,11 +12,11 @@ import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 @AutoConfiguration
 class SyncHttpClientsConfig {
 	
-	@ConditionalOnBean(name = "restClient")
+	@ConditionalOnBean(name = "defaultRestClient")
 	@Bean
-	RestClient jpsRestClient(RestClient restClient, JpsProps jpsProps) {
+	RestClient jpsRestClient(RestClient restClient, JpsClientProps clientProps) {
 		return restClient.mutate()
-				.baseUrl(jpsProps.baseUrl())
+				.baseUrl(clientProps.baseUrl())
 				.build();
 	}
 	

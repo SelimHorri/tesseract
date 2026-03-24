@@ -17,7 +17,7 @@ class HttpClientsConfig {
 	
 	@Primary
 	@Bean
-	RestClient restClient(RestClient.Builder restClientBuilder, HttpClientProps clientProps) {
+	RestClient defaultRestClient(RestClient.Builder restClientBuilder, HttpClientProps clientProps) {
 		return restClientBuilder
 				.requestFactory(ClientHttpRequestFactoryBuilder.jdk()
 						.withHttpClientCustomizer(httpClientBuilder -> httpClientBuilder
