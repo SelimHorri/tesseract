@@ -13,17 +13,14 @@ import org.springframework.web.reactive.function.client.ExchangeFunction;
 import reactor.core.publisher.Mono;
 
 import java.io.IOException;
-import java.util.function.Consumer;
 
-class DefaultClientHttpRequestInterceptor<T> implements ClientHttpRequestInterceptor, ExchangeFilterFunction {
+class DefaultClientHttpRequestInterceptor implements ClientHttpRequestInterceptor, ExchangeFilterFunction {
 	
 	private static final Logger LOG = LoggerFactory.getLogger(DefaultClientHttpRequestInterceptor.class);
 	private final ZitadelClientProps idpProps;
-	private final Consumer<T> interceptorLogic;
 	
-	DefaultClientHttpRequestInterceptor(ZitadelClientProps idpProps, Consumer<T> interceptorLogic) {
+	DefaultClientHttpRequestInterceptor(ZitadelClientProps idpProps) {
 		this.idpProps = idpProps;
-		this.interceptorLogic = interceptorLogic;
 	}
 	
 	@Override
@@ -34,8 +31,8 @@ class DefaultClientHttpRequestInterceptor<T> implements ClientHttpRequestInterce
 			return execution.execute(request, body);
 		}
 		
-		LOG.debug("Intercepting request {} {} to ZITADEL", request.getMethod(), request.getURI());
-		this.interceptorLogic.accept(null);
+		LOG.info("Intercepting request {} {} to ZITADEL", request.getMethod(), request.getURI());
+		//TODO: Add interceptor logic
 		return execution.execute(request, body);
 	}
 	
@@ -47,8 +44,8 @@ class DefaultClientHttpRequestInterceptor<T> implements ClientHttpRequestInterce
 			return next.exchange(request);
 		}
 		
-		LOG.debug("Intercepting request {} {} to ZITADEL", request.method(), request.url());
-		this.interceptorLogic.accept(null);
+		LOG.info("Intercepting request {} {} to ZITADEL", request.method(), request.url());
+		//TODO: Add interceptor logic
 		return next.exchange(request);
 	}
 	
