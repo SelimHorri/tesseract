@@ -17,7 +17,7 @@ class AsyncHttpClientsConfig {
 	WebClient zitadelWebClient(WebClient webClient, ZitadelClientProps clientProps) {
 		return webClient.mutate()
 				.baseUrl(clientProps.baseUrl())
-				.filter(new DefaultClientHttpRequestInterceptor(clientProps))
+				//.filter(new ZitadelDefaultExchangeRequestInterceptor(clientProps))
 				.build();
 	}
 	

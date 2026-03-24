@@ -14,12 +14,12 @@ import reactor.core.publisher.Mono;
 
 import java.io.IOException;
 
-class DefaultClientHttpRequestInterceptor implements ClientHttpRequestInterceptor, ExchangeFilterFunction {
+class ZitadelDefaultExchangeRequestInterceptor implements ClientHttpRequestInterceptor, ExchangeFilterFunction {
 	
-	private static final Logger LOG = LoggerFactory.getLogger(DefaultClientHttpRequestInterceptor.class);
+	private static final Logger LOG = LoggerFactory.getLogger(ZitadelDefaultExchangeRequestInterceptor.class);
 	private final ZitadelClientProps idpProps;
 	
-	DefaultClientHttpRequestInterceptor(ZitadelClientProps idpProps) {
+	ZitadelDefaultExchangeRequestInterceptor(ZitadelClientProps idpProps) {
 		this.idpProps = idpProps;
 	}
 	

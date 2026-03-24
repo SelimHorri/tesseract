@@ -17,7 +17,7 @@ class SyncHttpClientsConfig {
 	RestClient zitadelRestClient(RestClient restClient, ZitadelClientProps clientProps) {
 		return restClient.mutate()
 				.baseUrl(clientProps.baseUrl())
-				.requestInterceptor(new DefaultClientHttpRequestInterceptor(clientProps))
+				//.requestInterceptor(new ZitadelDefaultExchangeRequestInterceptor(clientProps))
 				.build();
 	}
 	
