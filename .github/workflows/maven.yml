@@ -31,6 +31,8 @@ jobs:
       run: mvn -B package --file tesseract-parent/pom.xml
     - name: Build Tesseract Starter JPS with Maven
       run: mvn -B package --file tesseract-starter-jps/pom.xml
+    - name: Build Tesseract Starter ZITADEL with Maven
+      run: mvn -B package --file tesseract-starter-zitadel/pom.xml
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     #- name: Update dependency graph
