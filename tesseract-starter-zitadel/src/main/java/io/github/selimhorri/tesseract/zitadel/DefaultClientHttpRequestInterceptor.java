@@ -29,7 +29,7 @@ class DefaultClientHttpRequestInterceptor<T> implements ClientHttpRequestInterce
 	@Override
 	public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
 		if (this.idpProps.publicUris().stream()
-				.anyMatch(request.getURI().normalize().toString()::startsWith)) {
+				.anyMatch(request.getURI().normalize().getPath()::startsWith)) {
 			LOG.info("Skip intercepting request to {} as it is not a public URI", request.getURI());
 			return execution.execute(request, body);
 		}
@@ -42,7 +42,7 @@ class DefaultClientHttpRequestInterceptor<T> implements ClientHttpRequestInterce
 	@Override
 	public Mono<ClientResponse> filter(ClientRequest request, ExchangeFunction next) {
 		if (this.idpProps.publicUris().stream()
-				.anyMatch(request.url().normalize().toString()::startsWith)) {
+				.anyMatch(request.url().normalize().getPath()::startsWith)) {
 			LOG.info("Skip intercepting request to {} as it is not a public URI", request.url());
 			return next.exchange(request);
 		}
