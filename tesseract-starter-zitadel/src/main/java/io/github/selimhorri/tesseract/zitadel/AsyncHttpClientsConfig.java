@@ -1,5 +1,6 @@
 package io.github.selimhorri.tesseract.zitadel;
 
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
@@ -14,11 +15,11 @@ class AsyncHttpClientsConfig {
 	
 	@ConditionalOnBean(name = "defaultWebClient")
 	@Bean
-	WebClient zitadelWebClient(WebClient webClient, ZitadelClientProps clientProps) {
-		return webClient.mutate()
-				.baseUrl(clientProps.baseUrl())
-				//.filter(new ZitadelDefaultExchangeRequestInterceptor(clientProps))
-				.build();
+	WebClient zitadelWebClient(WebClient webClient, ZitadelClientProps clientProps, ObjectProvider<ZitadelWebClientCustomizer> webClientCustomizers) {
+		var zitadelWebClientBuilder = webClient.mutate()
+				.baseUrl(clientProps.baseUrl());
+		webClientCustomizers.forEach(customizer -> customizer.customize(zitadelWebClientBuilder));
+		return zitadelWebClientBuilder.build();
 	}
 	
 	@Bean
