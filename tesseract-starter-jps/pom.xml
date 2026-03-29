@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.selimhorri</groupId>
     <artifactId>tesseract-starter-jps</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <name>tesseract-starter-jps</name>
     <description>tesseract Integration with JSONPlaceholder (JPS)</description>
     <packaging>jar</packaging>
@@ -35,7 +35,7 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <spring-boot.version>4.0.3</spring-boot.version>
-        <tesseract.version>1.0.0</tesseract.version>
+        <tesseract.version>1.0.1</tesseract.version>
         <maven-source-plugin.version>3.4.0</maven-source-plugin.version>
         <maven-javadoc-plugin.version>3.12.0</maven-javadoc-plugin.version>
         <maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
