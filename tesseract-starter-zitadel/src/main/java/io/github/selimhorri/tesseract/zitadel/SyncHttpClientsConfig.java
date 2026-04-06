@@ -4,6 +4,7 @@ import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.support.RestClientAdapter;
@@ -13,6 +14,7 @@ import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 @AutoConfiguration
 class SyncHttpClientsConfig {
 	
+	@ConditionalOnMissingBean
 	@ConditionalOnBean(name = "defaultRestClient")
 	@Bean
 	RestClient zitadelRestClient(RestClient restClient, ZitadelClientProps clientProps, ObjectProvider<ZitadelRestClientCustomizer> restClientCustomizers) {
@@ -22,6 +24,7 @@ class SyncHttpClientsConfig {
 		return zitadelRestClientBuilder.build();
 	}
 	
+	@ConditionalOnMissingBean
 	@Bean
 	HttpServiceProxyFactory zitadelProxyFactory(@Qualifier("zitadelRestClient") RestClient restClient) {
 		return HttpServiceProxyFactory.builder()
