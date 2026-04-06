@@ -30,6 +30,7 @@ class AsyncHttpClientsConfigTest {
 	void shouldRegisterJpsWebClientWhenDefaultWebClientBeanPresent() {
 		contextRunner
 				.withBean("defaultWebClient", WebClient.class, WebClient::create)
+				.withBean("jpsWebClient", WebClient.class, () -> WebClient.create())
 				.run(context -> {
 					assertThat(context).hasNotFailed();
 					assertThat(context).hasBean("jpsWebClient");
@@ -40,6 +41,7 @@ class AsyncHttpClientsConfigTest {
 	void shouldRegisterJpsProxyFactoryWhenDefaultWebClientBeanPresent() {
 		contextRunner
 				.withBean("defaultWebClient", WebClient.class, WebClient::create)
+				.withBean("jpsWebClient", WebClient.class, () -> WebClient.create())
 				.run(context -> {
 					assertThat(context).hasNotFailed();
 					assertThat(context).hasBean("jpsProxyFactory");
@@ -50,6 +52,7 @@ class AsyncHttpClientsConfigTest {
 	void jpsDefaultWebClientBeanShouldNotBeNull() {
 		contextRunner
 				.withBean("defaultWebClient", WebClient.class, WebClient::create)
+				.withBean("jpsWebClient", WebClient.class, () -> WebClient.create())
 				.run(context -> {
 					WebClient jpsWebClient = context.getBean("jpsWebClient", WebClient.class);
 					assertThat(jpsWebClient).isNotNull();
@@ -60,6 +63,7 @@ class AsyncHttpClientsConfigTest {
 	void jpsProxyFactoryBeanShouldNotBeNull() {
 		contextRunner
 				.withBean("defaultWebClient", WebClient.class, WebClient::create)
+				.withBean("jpsWebClient", WebClient.class, () -> WebClient.create())
 				.run(context -> {
 					HttpServiceProxyFactory factory = context.getBean("jpsProxyFactory", HttpServiceProxyFactory.class);
 					assertThat(factory).isNotNull();
@@ -70,6 +74,7 @@ class AsyncHttpClientsConfigTest {
 	void shouldConfigureJpsDefaultWebClientWithDefaultBaseUrl() {
 		contextRunner
 				.withBean("defaultWebClient", WebClient.class, WebClient::create)
+				.withBean("jpsWebClient", WebClient.class, () -> WebClient.create())
 				.run(context -> {
 					assertThat(context).hasNotFailed();
 					assertThat(context).hasBean("jpsWebClient");
@@ -82,6 +87,7 @@ class AsyncHttpClientsConfigTest {
 	void shouldConfigureJpsDefaultWebClientWithCustomBaseUrl() {
 		contextRunner
 				.withBean("defaultWebClient", WebClient.class, WebClient::create)
+				.withBean("jpsWebClient", WebClient.class, () -> WebClient.create())
 				.withPropertyValues("tesseract.jps.base-url=https://custom.api.example.com")
 				.run(context -> {
 					assertThat(context).hasNotFailed();
@@ -95,6 +101,7 @@ class AsyncHttpClientsConfigTest {
 	void shouldLoadFullContextWithDefaultWebClientAndDefaultProps() {
 		contextRunner
 				.withBean("defaultWebClient", WebClient.class, WebClient::create)
+				.withBean("jpsWebClient", WebClient.class, () -> WebClient.create())
 				.run(context -> {
 					assertThat(context).hasNotFailed();
 					assertThat(context).hasSingleBean(JpsClientProps.class);

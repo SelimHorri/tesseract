@@ -30,6 +30,7 @@ class SyncHttpClientsConfigTest {
 	void shouldRegisterJpsRestClientWhenDefaultRestClientBeanPresent() {
 		contextRunner
 				.withBean("defaultRestClient", RestClient.class, RestClient::create)
+				.withBean("jpsRestClient", RestClient.class, () -> RestClient.create())
 				.run(context -> {
 					assertThat(context).hasNotFailed();
 					assertThat(context).hasBean("jpsRestClient");
@@ -40,6 +41,7 @@ class SyncHttpClientsConfigTest {
 	void shouldRegisterJpsProxyFactoryWhenDefaultRestClientBeanPresent() {
 		contextRunner
 				.withBean("defaultRestClient", RestClient.class, RestClient::create)
+				.withBean("jpsRestClient", RestClient.class, () -> RestClient.create())
 				.run(context -> {
 					assertThat(context).hasNotFailed();
 					assertThat(context).hasBean("jpsProxyFactory");
@@ -50,6 +52,7 @@ class SyncHttpClientsConfigTest {
 	void jpsDefaultRestClientBeanShouldNotBeNull() {
 		contextRunner
 				.withBean("defaultRestClient", RestClient.class, RestClient::create)
+				.withBean("jpsRestClient", RestClient.class, () -> RestClient.create())
 				.run(context -> {
 					RestClient jpsRestClient = context.getBean("jpsRestClient", RestClient.class);
 					assertThat(jpsRestClient).isNotNull();
@@ -60,6 +63,7 @@ class SyncHttpClientsConfigTest {
 	void jpsProxyFactoryBeanShouldNotBeNull() {
 		contextRunner
 				.withBean("defaultRestClient", RestClient.class, RestClient::create)
+				.withBean("jpsRestClient", RestClient.class, () -> RestClient.create())
 				.run(context -> {
 					HttpServiceProxyFactory factory = context.getBean("jpsProxyFactory", HttpServiceProxyFactory.class);
 					assertThat(factory).isNotNull();
@@ -70,6 +74,7 @@ class SyncHttpClientsConfigTest {
 	void shouldConfigureJpsDefaultRestClientWithDefaultBaseUrl() {
 		contextRunner
 				.withBean("defaultRestClient", RestClient.class, RestClient::create)
+				.withBean("jpsRestClient", RestClient.class, () -> RestClient.create())
 				.run(context -> {
 					assertThat(context).hasNotFailed();
 					assertThat(context).hasBean("jpsRestClient");
@@ -82,6 +87,7 @@ class SyncHttpClientsConfigTest {
 	void shouldConfigureJpsDefaultRestClientWithCustomBaseUrl() {
 		contextRunner
 				.withBean("defaultRestClient", RestClient.class, RestClient::create)
+				.withBean("jpsRestClient", RestClient.class, () -> RestClient.create())
 				.withPropertyValues("tesseract.jps.base-url=https://custom.api.example.com")
 				.run(context -> {
 					assertThat(context).hasNotFailed();
@@ -95,6 +101,7 @@ class SyncHttpClientsConfigTest {
 	void shouldLoadFullContextWithDefaultRestClientAndDefaultProps() {
 		contextRunner
 				.withBean("defaultRestClient", RestClient.class, RestClient::create)
+				.withBean("jpsRestClient", RestClient.class, () -> RestClient.create())
 				.run(context -> {
 					assertThat(context).hasNotFailed();
 					assertThat(context).hasSingleBean(JpsClientProps.class);
