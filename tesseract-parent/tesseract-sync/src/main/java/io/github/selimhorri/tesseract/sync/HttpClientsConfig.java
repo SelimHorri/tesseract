@@ -3,7 +3,7 @@ package io.github.selimhorri.tesseract.sync;
 import io.github.selimhorri.tesseract.core.HttpClientProps;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.http.client.ClientHttpRequestFactoryBuilder;
-import org.springframework.boot.http.client.HttpClientSettings;
+import org.springframework.boot.http.client.ClientHttpRequestFactorySettings;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.web.client.RestClient;
@@ -25,7 +25,7 @@ class HttpClientsConfig {
 										? HttpClient.Version.HTTP_1_1
 										: HttpClient.Version.HTTP_2)
 								.build())
-						.build(HttpClientSettings.defaults()
+						.build(ClientHttpRequestFactorySettings.defaults()
 								.withConnectTimeout(clientProps.connectTimeout())
 								.withReadTimeout(clientProps.readTimeout())))
 				.build();

@@ -10,12 +10,11 @@ import org.springframework.web.client.RestClient;
 import org.springframework.web.client.support.RestClientAdapter;
 import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 
-@ConditionalOnBean(RestClient.class)
+@ConditionalOnBean(name = "defaultRestClient")
 @AutoConfiguration
 class SyncHttpClientsConfig {
 	
-	@ConditionalOnMissingBean
-	@ConditionalOnBean(name = "defaultRestClient")
+	@ConditionalOnMissingBean(name = "zitadelRestClient")
 	@Bean
 	RestClient zitadelRestClient(RestClient restClient, ZitadelClientProps clientProps, ObjectProvider<ZitadelRestClientCustomizer> restClientCustomizers) {
 		var zitadelRestClientBuilder = restClient.mutate()
@@ -24,7 +23,7 @@ class SyncHttpClientsConfig {
 		return zitadelRestClientBuilder.build();
 	}
 	
-	@ConditionalOnMissingBean
+	@ConditionalOnMissingBean(name = "zitadelProxyFactory")
 	@Bean
 	HttpServiceProxyFactory zitadelProxyFactory(@Qualifier("zitadelRestClient") RestClient restClient) {
 		return HttpServiceProxyFactory.builder()

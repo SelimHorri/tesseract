@@ -2,8 +2,8 @@ package io.github.selimhorri.tesseract.async;
 
 import io.github.selimhorri.tesseract.core.HttpClientProps;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.boot.http.client.HttpClientSettings;
 import org.springframework.boot.http.client.reactive.ClientHttpConnectorBuilder;
+import org.springframework.boot.http.client.reactive.ClientHttpConnectorSettings;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -25,7 +25,7 @@ class HttpClientsConfig {
 										? HttpClient.Version.HTTP_1_1
 										: HttpClient.Version.HTTP_2)
 								.build())
-						.build(HttpClientSettings.defaults()
+						.build(ClientHttpConnectorSettings.defaults()
 								.withConnectTimeout(clientProps.connectTimeout())
 								.withReadTimeout(clientProps.readTimeout())))
 				.build();

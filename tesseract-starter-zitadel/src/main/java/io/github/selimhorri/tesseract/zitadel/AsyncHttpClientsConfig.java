@@ -10,12 +10,11 @@ import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.support.WebClientAdapter;
 import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 
-@ConditionalOnBean(WebClient.class)
+@ConditionalOnBean(name = "defaultWebClient")
 @AutoConfiguration
 class AsyncHttpClientsConfig {
 	
-	@ConditionalOnMissingBean
-	@ConditionalOnBean(name = "defaultWebClient")
+	@ConditionalOnMissingBean(name = "zitadelWebClient")
 	@Bean
 	WebClient zitadelWebClient(WebClient webClient, ZitadelClientProps clientProps, ObjectProvider<ZitadelWebClientCustomizer> webClientCustomizers) {
 		var zitadelWebClientBuilder = webClient.mutate()
@@ -24,7 +23,7 @@ class AsyncHttpClientsConfig {
 		return zitadelWebClientBuilder.build();
 	}
 	
-	@ConditionalOnMissingBean
+	@ConditionalOnMissingBean(name = "zitadelProxyFactory")
 	@Bean
 	HttpServiceProxyFactory zitadelProxyFactory(@Qualifier("zitadelWebClient") WebClient webClient) {
 		return HttpServiceProxyFactory.builder()
