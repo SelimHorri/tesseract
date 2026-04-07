@@ -31,5 +31,11 @@ class SyncHttpClientsConfig {
 				.build();
 	}
 	
+	@ConditionalOnMissingBean(name = "tokenRetrieverSyncClient")
+	@Bean
+	TokenRetrieverSyncClient tokenRetrieverSyncClient(ZitadelClientProps clientProps, @Qualifier("zitadelRestClient") RestClient restClient) {
+		return new TokenRetrieverSyncClient(clientProps, restClient);
+	}
+	
 }
 
