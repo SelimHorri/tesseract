@@ -4,6 +4,6 @@ import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 @AutoConfiguration
-@EnableConfigurationProperties(ZitadelClientProps.class)
+@EnableConfigurationProperties(IdpClientProps.class)
 class ZitadelEnablingConfig {}
 

@@ -16,7 +16,7 @@ class AsyncHttpClientsConfig {
 	
 	@ConditionalOnMissingBean(name = "zitadelWebClient")
 	@Bean
-	WebClient zitadelWebClient(WebClient webClient, ZitadelClientProps clientProps, ObjectProvider<ZitadelWebClientCustomizer> webClientCustomizers) {
+	WebClient zitadelWebClient(WebClient webClient, IdpClientProps clientProps, ObjectProvider<ZitadelWebClientCustomizer> webClientCustomizers) {
 		var zitadelWebClientBuilder = webClient.mutate()
 				.baseUrl(clientProps.baseUrl());
 		webClientCustomizers.forEach(customizer -> customizer.customize(zitadelWebClientBuilder));
@@ -33,7 +33,7 @@ class AsyncHttpClientsConfig {
 	
 	@ConditionalOnMissingBean(name = "tokenRetrieverAsyncClient")
 	@Bean
-	TokenRetrieverAsyncClient tokenRetrieverAsyncClient(ZitadelClientProps clientProps, @Qualifier("zitadelWebClient") WebClient webClient) {
+	TokenRetrieverAsyncClient tokenRetrieverAsyncClient(IdpClientProps clientProps, @Qualifier("zitadelWebClient") WebClient webClient) {
 		return new TokenRetrieverAsyncClient(clientProps, webClient);
 	}
 	

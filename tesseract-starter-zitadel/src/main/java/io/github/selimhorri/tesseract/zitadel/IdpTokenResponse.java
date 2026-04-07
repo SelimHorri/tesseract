@@ -4,5 +4,5 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 @JsonNaming(SnakeCaseStrategy.class)
-public record ZitadelTokenResponse(String accessToken, String idToken, String refreshToken, Integer expiresIn, String tokenType, String scope) {}
+public record IdpTokenResponse(String accessToken, String idToken, String refreshToken, Integer expiresIn, String tokenType, String scope) {}
 

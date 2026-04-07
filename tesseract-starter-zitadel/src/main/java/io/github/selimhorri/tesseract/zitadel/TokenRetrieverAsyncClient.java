@@ -7,15 +7,15 @@ import reactor.core.publisher.Mono;
 
 public class TokenRetrieverAsyncClient {
 	
-	private final ZitadelClientProps clientProps;
+	private final IdpClientProps clientProps;
 	private final WebClient http;
 	
-	TokenRetrieverAsyncClient(ZitadelClientProps clientProps, @Qualifier("zitadelWebClient") WebClient http) {
+	TokenRetrieverAsyncClient(IdpClientProps clientProps, @Qualifier("zitadelWebClient") WebClient http) {
 		this.clientProps = clientProps;
 		this.http = http;
 	}
 	
-	public Mono<ZitadelTokenResponse> obtainToken() {
+	public Mono<IdpTokenResponse> obtainToken() {
 		return this.http.post()
 				.uri("/oauth/v2/token", uriBuilder -> uriBuilder
 						.queryParam("client_id", this.clientProps.clientId())
@@ -26,7 +26,7 @@ public class TokenRetrieverAsyncClient {
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_FORM_URLENCODED)
 				.retrieve()
-				.bodyToMono(ZitadelTokenResponse.class);
+				.bodyToMono(IdpTokenResponse.class);
 	}
 	
 }
