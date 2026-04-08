@@ -1,6 +1,5 @@
 package io.github.selimhorri.tesseract.zitadel;
 
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
@@ -10,7 +9,7 @@ public class TokenRetrieverAsyncClient {
 	private final IdpClientProps clientProps;
 	private final WebClient http;
 	
-	TokenRetrieverAsyncClient(IdpClientProps clientProps, @Qualifier("zitadelWebClient") WebClient http) {
+	TokenRetrieverAsyncClient(IdpClientProps clientProps, WebClient http) {
 		this.clientProps = clientProps;
 		this.http = http;
 	}
