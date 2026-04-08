@@ -2,6 +2,7 @@ package io.github.selimhorri.tesseract.sync;
 
 import io.github.selimhorri.tesseract.core.HttpClientProps;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.http.client.ClientHttpRequestFactoryBuilder;
 import org.springframework.boot.http.client.ClientHttpRequestFactorySettings;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +16,7 @@ import java.net.http.HttpClient;
 @AutoConfiguration
 class HttpClientsConfig {
 	
+	@ConditionalOnMissingBean(name = "defaultRestClient")
 	@Primary
 	@Bean
 	RestClient defaultRestClient(RestClient.Builder restClientBuilder, HttpClientProps clientProps) {
@@ -31,6 +33,7 @@ class HttpClientsConfig {
 				.build();
 	}
 	
+	@ConditionalOnMissingBean(name = "syncProxyFactory")
 	@Primary
 	@Bean
 	HttpServiceProxyFactory syncProxyFactory(RestClient restClient) {

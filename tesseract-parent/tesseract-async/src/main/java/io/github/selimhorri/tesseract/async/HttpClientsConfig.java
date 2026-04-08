@@ -2,6 +2,7 @@ package io.github.selimhorri.tesseract.async;
 
 import io.github.selimhorri.tesseract.core.HttpClientProps;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.http.client.reactive.ClientHttpConnectorBuilder;
 import org.springframework.boot.http.client.reactive.ClientHttpConnectorSettings;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +16,7 @@ import java.net.http.HttpClient;
 @AutoConfiguration
 class HttpClientsConfig {
 	
+	@ConditionalOnMissingBean(name = "defaultWebClient")
 	@Primary
 	@Bean
 	WebClient defaultWebClient(WebClient.Builder webClientBuilder, HttpClientProps clientProps) {
@@ -31,6 +33,7 @@ class HttpClientsConfig {
 				.build();
 	}
 	
+	@ConditionalOnMissingBean(name = "asyncProxyFactory")
 	@Primary
 	@Bean
 	HttpServiceProxyFactory asyncProxyFactory(WebClient webClient) {
