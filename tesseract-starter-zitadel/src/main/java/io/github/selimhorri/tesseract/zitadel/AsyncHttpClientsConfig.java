@@ -33,8 +33,8 @@ class AsyncHttpClientsConfig {
 	
 	@ConditionalOnMissingBean(name = "tokenRetrieverAsyncClient")
 	@Bean
-	TokenRetrieverAsyncClient tokenRetrieverAsyncClient(IdpClientProps clientProps, @Qualifier("zitadelWebClient") WebClient webClient) {
-		return new TokenRetrieverAsyncClient(clientProps, webClient);
+	TokenRetrieverAsyncClient tokenRetrieverAsyncClient(@Qualifier("zitadelWebClient") WebClient webClient) {
+		return new DefaultTokenRetrieverAsyncClient(webClient);
 	}
 	
 }
