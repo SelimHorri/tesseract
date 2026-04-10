@@ -8,7 +8,7 @@ import org.springframework.validation.annotation.Validated;
 
 import java.time.Duration;
 
-@ConfigurationProperties(prefix = "tesseract.web.http.client")
+@ConfigurationProperties(prefix = "tesseract.main.client")
 @Validated
 record DefaultHttpClientProps(@DefaultValue("5s") Duration connectTimeout,
 							  @DefaultValue("5s") Duration readTimeout,

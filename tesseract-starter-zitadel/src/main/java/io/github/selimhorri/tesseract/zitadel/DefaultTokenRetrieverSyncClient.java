@@ -12,10 +12,7 @@ class DefaultTokenRetrieverSyncClient implements TokenRetrieverSyncClient {
 	}
 	
 	@Override
-	public IdpTokenResponse obtainToken(String clientId,
-	                                    String clientSecret,
-	                                    String grantType,
-	                                    String scope) {
+	public IdpTokenResponse obtainToken(String clientId, String clientSecret, String grantType, String scope) {
 		return this.http.post()
 				.uri("/oauth/v2/token", uriBuilder -> uriBuilder
 						.queryParam("client_id", clientId)

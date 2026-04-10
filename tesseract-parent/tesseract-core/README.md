@@ -13,14 +13,14 @@ Tesseract Core is the foundational module for the Tesseract ecosystem. It provid
 
 ## Configuration Properties
 
-Tesseract Core binds properties from the `tesseract.web.http.client` prefix:
+Tesseract Core binds properties from the `tesseract.main.client` prefix:
 
 | Property | Default | Description |
 |----------|---------|-------------|
-| `tesseract.web.http.client.connect-timeout` | `5s` | Duration for connection establishment. |
-| `tesseract.web.http.client.read-timeout` | `5s` | Duration to wait for data after connection. |
-| `tesseract.web.http.client.http-version` | `2` | HTTP version to use (1 for HTTP/1.1, 2 for HTTP/2). |
-| `tesseract.web.http.client.ssl-bundle-name` | `""` | Name of the SSL bundle for secure connections. |
+| `tesseract.main.client.connect-timeout` | `5s` | Duration for connection establishment. |
+| `tesseract.main.client.read-timeout` | `5s` | Duration to wait for data after connection. |
+| `tesseract.main.client.http-version` | `2` | HTTP version to use (1 for HTTP/1.1, 2 for HTTP/2). |
+| `tesseract.main.client.ssl-bundle-name` | `""` | Name of the SSL bundle for secure connections. |
 
 ## Core Infrastructure
 
@@ -38,7 +38,7 @@ public interface HttpClientProps {
 ### `DefaultHttpClientProps` Record
 A validated `@ConfigurationProperties` implementation:
 ```java
-@ConfigurationProperties(prefix = "tesseract.web.http.client")
+@ConfigurationProperties(prefix = "tesseract.main.client")
 @Validated
 record DefaultHttpClientProps(
     @DefaultValue("5s") Duration connectTimeout,

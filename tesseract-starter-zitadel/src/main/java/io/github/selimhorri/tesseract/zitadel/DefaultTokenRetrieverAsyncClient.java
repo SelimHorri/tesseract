@@ -13,10 +13,7 @@ class DefaultTokenRetrieverAsyncClient implements TokenRetrieverAsyncClient {
 	}
 	
 	@Override
-	public Mono<IdpTokenResponse> obtainToken(String clientId,
-	                                          String clientSecret,
-	                                          String grantType,
-	                                          String scope) {
+	public Mono<IdpTokenResponse> obtainToken(String clientId, String clientSecret, String grantType, String scope) {
 		return this.http.post()
 				.uri("/oauth/v2/token", uriBuilder -> uriBuilder
 						.queryParam("client_id", clientId)

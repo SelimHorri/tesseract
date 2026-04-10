@@ -10,7 +10,7 @@ The Tesseract project is divided into specialized modules to provide flexibility
 - **Purpose**: Acts as the foundational module containing shared configurations and property definitions.
 - **Key Responsibilities**:
     - Defines the `HttpClientProps` interface, which serves as a contract for HTTP client settings (connection timeout, read timeout, HTTP version, and SSL bundle).
-    - Provides `DefaultHttpClientProps`, a Spring `@ConfigurationProperties` record that binds to the `tesseract.web.http.client` prefix.
+    - Provides `DefaultHttpClientProps`, a Spring `@ConfigurationProperties` record that binds to the `tesseract.main.client` prefix.
     - Includes `HttpClientEnablingConfig`, which automatically enables the configuration properties for use in other modules.
 
 ### 2. Tesseract Sync (`tesseract-sync`)
@@ -33,13 +33,12 @@ Tesseract can be easily customized via your application's configuration files (`
 
 ```yaml
 tesseract:
-  web:
-    http:
-      client:
-        connect-timeout: 5s   # Duration for a connection establishment
-        read-timeout: 5s      # Duration to wait for data after connection
-        http-version: 2       # Desired HTTP version (e.g., 1 for HTTP/1.1, 2 for HTTP/2)
-        ssl-bundle-name: ""   # Optional name of an SSL bundle for secure connections
+  main:
+    client:
+      connect-timeout: 5s   # Duration for a connection establishment
+      read-timeout: 5s      # Duration to wait for data after connection
+      http-version: 2       # Desired HTTP version (e.g., 1 for HTTP/1.1, 2 for HTTP/2)
+      ssl-bundle-name: ""   # Optional name of an SSL bundle for secure connections
 ```
 
 ## Getting Started

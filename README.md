@@ -69,12 +69,11 @@ Tesseract is designed for enterprise-grade applications. You can control connect
 
 ```yaml
 tesseract:
-  web:
-    http:
-      client:
-        connect-timeout: 5s
-        read-timeout: 10s
-        http-version: 2
+  main:
+    client:
+      connect-timeout: 5s
+      read-timeout: 10s
+      http-version: 2
   jps:
     base-url: https://jsonplaceholder.typicode.com
 ```

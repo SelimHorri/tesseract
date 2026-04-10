@@ -58,7 +58,7 @@ class HttpClientEnablingConfigTest {
 	@Test
 	void shouldBindCustomConnectTimeout() {
 		contextRunner
-				.withPropertyValues("tesseract.web.http.client.connect-timeout=10s")
+				.withPropertyValues("tesseract.main.client.connect-timeout=10s")
 				.run(context -> {
 					HttpClientProps props = context.getBean(HttpClientProps.class);
 					assertThat(props.connectTimeout()).isEqualTo(Duration.ofSeconds(10));
@@ -68,7 +68,7 @@ class HttpClientEnablingConfigTest {
 	@Test
 	void shouldBindCustomReadTimeout() {
 		contextRunner
-				.withPropertyValues("tesseract.web.http.client.read-timeout=15s")
+				.withPropertyValues("tesseract.main.client.read-timeout=15s")
 				.run(context -> {
 					HttpClientProps props = context.getBean(HttpClientProps.class);
 					assertThat(props.readTimeout()).isEqualTo(Duration.ofSeconds(15));
@@ -78,7 +78,7 @@ class HttpClientEnablingConfigTest {
 	@Test
 	void shouldBindHttpVersion1() {
 		contextRunner
-				.withPropertyValues("tesseract.web.http.client.http-version=1")
+				.withPropertyValues("tesseract.main.client.http-version=1")
 				.run(context -> {
 					HttpClientProps props = context.getBean(HttpClientProps.class);
 					assertThat(props.httpVersion()).isEqualTo(1);
@@ -88,7 +88,7 @@ class HttpClientEnablingConfigTest {
 	@Test
 	void shouldBindHttpVersion3() {
 		contextRunner
-				.withPropertyValues("tesseract.web.http.client.http-version=3")
+				.withPropertyValues("tesseract.main.client.http-version=3")
 				.run(context -> {
 					HttpClientProps props = context.getBean(HttpClientProps.class);
 					assertThat(props.httpVersion()).isEqualTo(3);
@@ -98,7 +98,7 @@ class HttpClientEnablingConfigTest {
 	@Test
 	void shouldBindCustomSslBundleName() {
 		contextRunner
-				.withPropertyValues("tesseract.web.http.client.ssl-bundle-name=my-ssl-bundle")
+				.withPropertyValues("tesseract.main.client.ssl-bundle-name=my-ssl-bundle")
 				.run(context -> {
 					HttpClientProps props = context.getBean(HttpClientProps.class);
 					assertThat(props.sslBundleName()).isEqualTo("my-ssl-bundle");
@@ -109,10 +109,10 @@ class HttpClientEnablingConfigTest {
 	void shouldBindAllCustomValues() {
 		contextRunner
 				.withPropertyValues(
-						"tesseract.web.http.client.connect-timeout=10s",
-						"tesseract.web.http.client.read-timeout=15s",
-						"tesseract.web.http.client.http-version=1",
-						"tesseract.web.http.client.ssl-bundle-name=my-bundle"
+						"tesseract.main.client.connect-timeout=10s",
+						"tesseract.main.client.read-timeout=15s",
+						"tesseract.main.client.http-version=1",
+						"tesseract.main.client.ssl-bundle-name=my-bundle"
 				)
 				.run(context -> {
 					HttpClientProps props = context.getBean(HttpClientProps.class);
