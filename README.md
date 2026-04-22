@@ -49,14 +49,14 @@ If you want to use the JSONPlaceholder starter synchronously:
     <dependency>
         <groupId>io.github.selimhorri</groupId>
         <artifactId>tesseract-starter-jps</artifactId>
-        <version>1.0.1</version>
+        <version>1.0.2</version>
     </dependency>
 
     <!-- 2. The Communication Style (Synchronous) -->
     <dependency>
         <groupId>io.github.selimhorri</groupId>
         <artifactId>tesseract-sync</artifactId>
-        <version>1.0.1</version>
+        <version>1.0.2</version>
     </dependency>
 </dependencies>
 ```
