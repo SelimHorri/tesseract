@@ -13,7 +13,7 @@ services:
       ZITADEL_DATABASE_POSTGRES_ADMIN_USERNAME: postgres
       ZITADEL_DATABASE_POSTGRES_ADMIN_PASSWORD: postgres
       ZITADEL_DATABASE_POSTGRES_ADMIN_SSL_MODE: disable
-      ZITADEL_EXTERNALSECURE: false
+      ZITADEL_EXTERNALSECURE: 'false'
     depends_on:
       postgres:
         condition: service_healthy
