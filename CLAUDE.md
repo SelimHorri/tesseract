@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Tesseract is a modular Spring Boot library that standardizes HTTP client configuration. It provides autoconfigured `RestClient` (synchronous) and `WebClient` (asynchronous) beans that consumers activate by choosing which dependency to include on their classpath.
 
-**Java 25** | **Spring Boot 3.5.10** | **Maven** | Published to Maven Central under `io.github.selimhorri`
+**Java 25** | **Spring Boot 3.5.13** | **Maven** | Published to Maven Central under `io.github.selimhorri`
 
 ## Build Commands
 
