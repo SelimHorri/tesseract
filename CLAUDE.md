@@ -33,17 +33,17 @@ mvn test -f tesseract-parent/tesseract-core/pom.xml -Dtest=DefaultHttpClientProp
 
 ## Code Formatting
 
-Spotless with Eclipse formatter is configured **only in tesseract-parent** and runs automatically during `compile` phase. Starters do not have Spotless configured.
+Spotless with Eclipse formatter is configured in **ALL** Tesseract projects and runs automatically during `compile` phase. Starters do not have Spotless configured.
 
 ```bash
-# Apply formatting (core modules only)
-mvn spotless:apply -f tesseract-parent/pom.xml
-
 # Check without applying
-mvn spotless:check -f tesseract-parent/pom.xml
+mvn spotless:check
+
+# Apply formatting (core modules only)
+mvn spotless:apply
 ```
 
-Formatter config: `tesseract-parent/spotless-eclipse-formatter.xml`
+Formatter config: `<tesseract-*>/spotless-eclipse-formatter.xml`
 
 ## Architecture
 
