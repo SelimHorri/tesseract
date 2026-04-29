@@ -16,7 +16,9 @@ class SyncHttpClientsConfig {
 	
 	@ConditionalOnMissingBean(name = "zitadelRestClient")
 	@Bean
-	RestClient zitadelRestClient(RestClient restClient, IdpClientProps clientProps, ObjectProvider<ZitadelRestClientCustomizer> restClientCustomizers) {
+	RestClient zitadelRestClient(RestClient restClient,
+								 IdpClientProps clientProps,
+								 ObjectProvider<ZitadelRestClientCustomizer> restClientCustomizers) {
 		var zitadelRestClientBuilder = restClient.mutate()
 				.baseUrl(clientProps.baseUrl());
 		restClientCustomizers.forEach(customizer -> customizer.customize(zitadelRestClientBuilder));
