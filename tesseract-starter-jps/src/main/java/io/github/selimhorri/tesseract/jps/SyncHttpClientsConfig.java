@@ -13,8 +13,7 @@ import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 @AutoConfiguration
 class SyncHttpClientsConfig {
 	
-	@ConditionalOnMissingBean
-	@ConditionalOnBean(name = "defaultRestClient")
+	@ConditionalOnMissingBean(name = "jpsRestClient")
 	@Bean
 	RestClient jpsRestClient(RestClient restClient, JpsClientProps clientProps) {
 		return restClient.mutate()
@@ -22,9 +21,9 @@ class SyncHttpClientsConfig {
 				.build();
 	}
 	
-	//@ConditionalOnMissingBean
+	@ConditionalOnMissingBean(name = "jpsSyncProxyFactory")
 	@Bean
-	HttpServiceProxyFactory jpsProxyFactory(@Qualifier("jpsRestClient") RestClient restClient) {
+	HttpServiceProxyFactory jpsSyncProxyFactory(@Qualifier("jpsRestClient") RestClient restClient) {
 		return HttpServiceProxyFactory.builder()
 				.exchangeAdapter(RestClientAdapter.create(restClient))
 				.build();

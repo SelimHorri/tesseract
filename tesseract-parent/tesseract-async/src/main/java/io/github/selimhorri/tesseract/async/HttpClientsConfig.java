@@ -33,10 +33,10 @@ class HttpClientsConfig {
 				.build();
 	}
 	
-	@ConditionalOnMissingBean(name = "asyncProxyFactory")
+	@ConditionalOnMissingBean(name = "defaultAsyncProxyFactory")
 	@Primary
 	@Bean
-	HttpServiceProxyFactory asyncProxyFactory(WebClient webClient) {
+	HttpServiceProxyFactory defaultAsyncProxyFactory(WebClient webClient) {
 		return HttpServiceProxyFactory.builder()
 				.exchangeAdapter(WebClientAdapter.create(webClient))
 				.build();

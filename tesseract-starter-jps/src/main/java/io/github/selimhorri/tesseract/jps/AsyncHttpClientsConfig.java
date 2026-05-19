@@ -22,9 +22,9 @@ class AsyncHttpClientsConfig {
 				.build();
 	}
 	
-	@ConditionalOnMissingBean
+	@ConditionalOnMissingBean(name = "jpsAsyncProxyFactory")
 	@Bean
-	HttpServiceProxyFactory jpsProxyFactory(@Qualifier("jpsWebClient") WebClient webClient) {
+	HttpServiceProxyFactory jpsAsyncProxyFactory(@Qualifier("jpsWebClient") WebClient webClient) {
 		return HttpServiceProxyFactory.builder()
 				.exchangeAdapter(WebClientAdapter.create(webClient))
 				.build();

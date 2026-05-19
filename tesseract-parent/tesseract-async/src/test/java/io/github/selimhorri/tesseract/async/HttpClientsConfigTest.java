@@ -197,8 +197,8 @@ class HttpClientsConfigTest {
 	}
 	
 	@Test
-	void httpServiceProxyFactoryBeanNameShouldBeAsyncProxyFactory() {
-		withDefaultProps().run(context -> assertThat(context).hasBean("asyncProxyFactory"));
+	void httpServiceProxyFactoryBeanNameShouldBeDefaultAsyncProxyFactory() {
+		withDefaultProps().run(context -> assertThat(context).hasBean("defaultAsyncProxyFactory"));
 	}
 	
 }

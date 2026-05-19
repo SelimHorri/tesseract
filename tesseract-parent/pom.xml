@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.selimhorri</groupId>
     <artifactId>tesseract-parent</artifactId>
-    <version>1.0.3-SNAPSHOT</version>
+    <version>1.0.3</version>
     <name>tesseract-parent</name>
     <description>tesseract parent module</description>
     <packaging>pom</packaging>
@@ -35,7 +35,7 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <spring-boot.version>3.5.14</spring-boot.version>
-        <tesseract.version>1.0.3-SNAPSHOT</tesseract.version>
+        <tesseract.version>1.0.3</tesseract.version>
         <maven-source-plugin.version>3.4.0</maven-source-plugin.version>
         <maven-javadoc-plugin.version>3.12.0</maven-javadoc-plugin.version>
         <maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
@@ -60,6 +60,18 @@
             <dependency>
                 <groupId>io.github.selimhorri</groupId>
                 <artifactId>tesseract-core</artifactId>
+                <version>${tesseract.version}</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.github.selimhorri</groupId>
+                <artifactId>tesseract-sync</artifactId>
+                <version>${tesseract.version}</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.github.selimhorri</groupId>
+                <artifactId>tesseract-async</artifactId>
                 <version>${tesseract.version}</version>
                 <scope>compile</scope>
             </dependency>

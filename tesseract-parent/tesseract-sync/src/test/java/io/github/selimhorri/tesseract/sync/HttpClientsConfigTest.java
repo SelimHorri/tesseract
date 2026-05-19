@@ -197,8 +197,8 @@ class HttpClientsConfigTest {
 	}
 	
 	@Test
-	void httpServiceProxyFactoryBeanNameShouldBeSyncProxyFactory() {
-		withDefaultProps().run(context -> assertThat(context).hasBean("syncProxyFactory"));
+	void httpServiceProxyFactoryBeanNameShouldBeDefaultSyncProxyFactory() {
+		withDefaultProps().run(context -> assertThat(context).hasBean("defaultSyncProxyFactory"));
 	}
 	
 }

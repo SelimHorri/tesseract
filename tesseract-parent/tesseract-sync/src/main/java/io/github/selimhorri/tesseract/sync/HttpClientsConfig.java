@@ -33,10 +33,10 @@ class HttpClientsConfig {
 				.build();
 	}
 	
-	@ConditionalOnMissingBean(name = "syncProxyFactory")
+	@ConditionalOnMissingBean(name = "defaultSyncProxyFactory")
 	@Primary
 	@Bean
-	HttpServiceProxyFactory syncProxyFactory(RestClient restClient) {
+	HttpServiceProxyFactory defaultSyncProxyFactory(RestClient restClient) {
 		return HttpServiceProxyFactory.builder()
 				.exchangeAdapter(RestClientAdapter.create(restClient))
 				.build();
