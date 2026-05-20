@@ -9,8 +9,8 @@ import org.springframework.web.client.RestClient;
 import org.springframework.web.client.support.RestClientAdapter;
 import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 
-@ConditionalOnBean(RestClient.class)
-@AutoConfiguration
+@ConditionalOnBean(name = "defaultRestClient")
+@AutoConfiguration(afterName = "io.github.selimhorri.tesseract.sync.HttpClientsConfig")
 class SyncHttpClientsConfig {
 	
 	@ConditionalOnMissingBean(name = "jpsRestClient")

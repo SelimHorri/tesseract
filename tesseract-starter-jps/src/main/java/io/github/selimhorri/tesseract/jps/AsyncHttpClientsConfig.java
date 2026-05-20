@@ -9,8 +9,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.support.WebClientAdapter;
 import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 
-@ConditionalOnBean(WebClient.class)
-@AutoConfiguration
+@ConditionalOnBean(name = "defaultWebClient")
+@AutoConfiguration(afterName = "io.github.selimhorri.tesseract.async.HttpClientsConfig")
 class AsyncHttpClientsConfig {
 	
 	@ConditionalOnMissingBean
