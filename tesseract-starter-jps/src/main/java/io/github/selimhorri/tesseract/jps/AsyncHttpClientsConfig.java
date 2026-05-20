@@ -13,8 +13,7 @@ import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 @AutoConfiguration(afterName = "io.github.selimhorri.tesseract.async.HttpClientsConfig")
 class AsyncHttpClientsConfig {
 	
-	@ConditionalOnMissingBean
-	@ConditionalOnBean(name = "defaultWebClient")
+	@ConditionalOnMissingBean(name = "jpsWebClient")
 	@Bean
 	WebClient jpsWebClient(WebClient webClient, JpsClientProps clientProps) {
 		return webClient.mutate()
