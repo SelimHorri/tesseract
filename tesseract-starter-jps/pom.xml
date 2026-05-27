@@ -53,13 +53,10 @@
             </dependency>
             <dependency>
                 <groupId>io.github.selimhorri</groupId>
-                <artifactId>tesseract-sync</artifactId>
+                <artifactId>tesseract-parent</artifactId>
                 <version>${tesseract.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.github.selimhorri</groupId>
-                <artifactId>tesseract-async</artifactId>
-                <version>${tesseract.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
