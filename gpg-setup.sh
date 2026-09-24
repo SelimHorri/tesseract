@@ -4,7 +4,7 @@ GPG_KEY=$1
 
 mvn clean install --file tesseract-parent/pom.xml
 mvn clean install --file tesseract-starter-jps/pom.xml
-mvn clean install --file tesseract-starter-zitadel/pom.xml
+#mvn clean install --file tesseract-starter-zitadel/pom.xml
 
 # ---
 
@@ -32,10 +32,10 @@ gpg -ab tesseract-starter-jps/target/tesseract-starter-jps-1.0.3.pom
 
 # ---
 
-gpg -ab tesseract-starter-zitadel/target/tesseract-starter-zitadel-1.0.3.jar
-gpg -ab tesseract-starter-zitadel/target/tesseract-starter-zitadel-1.0.3-sources.jar
-gpg -ab tesseract-starter-zitadel/target/tesseract-starter-zitadel-1.0.3-javadoc.jar
-gpg -ab tesseract-starter-zitadel/target/tesseract-starter-zitadel-1.0.3.pom
+#gpg -ab tesseract-starter-zitadel/target/tesseract-starter-zitadel-1.0.3.jar
+#gpg -ab tesseract-starter-zitadel/target/tesseract-starter-zitadel-1.0.3-sources.jar
+#gpg -ab tesseract-starter-zitadel/target/tesseract-starter-zitadel-1.0.3-javadoc.jar
+#gpg -ab tesseract-starter-zitadel/target/tesseract-starter-zitadel-1.0.3.pom
 
 # ---
 

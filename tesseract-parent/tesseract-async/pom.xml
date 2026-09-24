@@ -12,9 +12,9 @@
     <name>tesseract-async</name>
     <description>Tesseract Sync Library for easily creating asynchronous Spring HTTP Clients</description>
     <packaging>jar</packaging>
-    
+
     <url>https://github.com/SelimHorri/tesseract/tesseract-parent/tesseract-async</url>
-    
+
     <dependencies>
         <dependency>
             <groupId>io.github.selimhorri</groupId>
@@ -42,7 +42,7 @@
             <optional>true</optional>
         </dependency>
     </dependencies>
-    
+
     <build>
         <plugins>
             <plugin>
@@ -69,19 +69,10 @@
                         <eclipse>
                             <file>${project.parent.basedir}/spotless-eclipse-formatter.xml</file>
                         </eclipse>
-                        <removeUnusedImports/>
                     </java>
                 </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>apply</goal>
-                        </goals>
-                        <phase>compile</phase>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
-    
+
 </project>

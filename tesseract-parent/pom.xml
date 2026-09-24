@@ -9,7 +9,7 @@
     <name>tesseract-parent</name>
     <description>tesseract parent module</description>
     <packaging>pom</packaging>
-    
+
     <url>https://github.com/SelimHorri/tesseract/tesseract-parent</url>
     <licenses>
         <license>
@@ -29,25 +29,25 @@
         <url>https://github.com/SelimHorri/tesseract</url>
         <tag/>
     </scm>
-    
+
     <properties>
         <java.version>25</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <spring-boot.version>3.5.14</spring-boot.version>
-        <tesseract.version>1.0.3</tesseract.version>
+        <tesseract.version>${project.version}</tesseract.version>
         <maven-source-plugin.version>3.4.0</maven-source-plugin.version>
         <maven-javadoc-plugin.version>3.12.0</maven-javadoc-plugin.version>
         <maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
         <central-publishing-maven-plugin.version>0.10.0</central-publishing-maven-plugin.version>
     </properties>
-    
+
     <modules>
         <module>tesseract-core</module>
         <module>tesseract-sync</module>
         <module>tesseract-async</module>
     </modules>
-    
+
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -77,47 +77,8 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-    
+
     <build>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>io.github.git-commit-id</groupId>
-                    <artifactId>git-commit-id-maven-plugin</artifactId>
-                    <configuration>
-                        <failOnNoGitDirectory>false</failOnNoGitDirectory>
-                        <failOnUnableToExtractRepoInfo>false</failOnUnableToExtractRepoInfo>
-                        <generateGitPropertiesFile>true</generateGitPropertiesFile>
-                        <includeOnlyProperties>
-                            <includeOnlyProperty>^git.branch$</includeOnlyProperty>
-                            <includeOnlyProperty>^git.commit.id.abbrev$</includeOnlyProperty>
-                            <includeOnlyProperty>^git.commit.user.name$</includeOnlyProperty>
-                            <includeOnlyProperty>^git.commit.message.full$</includeOnlyProperty>
-                        </includeOnlyProperties>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>com.diffplug.spotless</groupId>
-                    <artifactId>spotless-maven-plugin</artifactId>
-                    <configuration>
-                        <java>
-                            <eclipse>
-                                <file>${project.basedir}/spotless-eclipse-formatter.xml</file>
-                            </eclipse>
-                            <removeUnusedImports/>
-                        </java>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <goals>
-                                <goal>apply</goal>
-                            </goals>
-                            <phase>compile</phase>
-                        </execution>
-                    </executions>
-                </plugin>
-            </plugins>
-        </pluginManagement>
         <plugins>
             <plugin>
                 <groupId>io.github.git-commit-id</groupId>
@@ -133,6 +94,26 @@
                         <includeOnlyProperty>^git.commit.message.full$</includeOnlyProperty>
                     </includeOnlyProperties>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.diffplug.spotless</groupId>
+                <artifactId>spotless-maven-plugin</artifactId>
+                <configuration>
+                    <java>
+                        <eclipse>
+                            <file>${project.basedir}/spotless-eclipse-formatter.xml</file>
+                        </eclipse>
+                        <removeUnusedImports/>
+                    </java>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>apply</goal>
+                        </goals>
+                        <phase>compile</phase>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -188,5 +169,5 @@
         </plugins>
         <finalName>${project.artifactId}-v${project.version}</finalName>
     </build>
-    
+
 </project>

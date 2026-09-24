@@ -12,9 +12,9 @@
     <name>tesseract-core</name>
     <description>Tesseract Core Library for shared configurations and property definitions</description>
     <packaging>jar</packaging>
-    
+
     <url>https://github.com/SelimHorri/tesseract/tesseract-parent/tesseract-core</url>
-    
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -33,7 +33,7 @@
             <optional>true</optional>
         </dependency>
     </dependencies>
-    
+
     <build>
         <plugins>
             <plugin>
@@ -60,19 +60,10 @@
                         <eclipse>
                             <file>${project.parent.basedir}/spotless-eclipse-formatter.xml</file>
                         </eclipse>
-                        <removeUnusedImports/>
                     </java>
                 </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>apply</goal>
-                        </goals>
-                        <phase>compile</phase>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
-    
+
 </project>
