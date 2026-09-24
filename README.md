@@ -70,7 +70,7 @@ my-app/
         <dependency>
             <groupId>io.github.selimhorri</groupId>
             <artifactId>tesseract-parent</artifactId>
-            <version>1.0.3</version>
+            <version>1.0.4</version>
             <type>pom</type>
             <scope>import</scope>
         </dependency>
@@ -122,7 +122,7 @@ submodule. The BOM doesn't manage starters, so the starter needs an explicit `<v
     <dependency>
         <groupId>io.github.selimhorri</groupId>
         <artifactId>tesseract-starter-jps</artifactId>
-        <version>1.0.3</version>
+        <version>1.0.4</version>
     </dependency>
 
     <!-- The communication style: tesseract-sync (RestClient) or tesseract-async (WebClient); version comes from the BOM -->
