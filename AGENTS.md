@@ -8,7 +8,7 @@ Tesseract is a modular Spring Boot library that standardizes HTTP client configu
 `RestClient` (synchronous) and `WebClient` (reactive) beans. Consumers turn them on by choosing which dependency to put
 on their classpath.
 
-**Java 25** | **Spring Boot 3.5.14** | **Maven** | Version **1.0.3** | Published to Maven Central under
+**Java 25** | **Spring Boot 4.1.1** | **Maven** | Version **2.0.0** | Published to Maven Central under
 `io.github.selimhorri`
 
 ## Repository Layout

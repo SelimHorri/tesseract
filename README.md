@@ -4,7 +4,7 @@ Tesseract is a set of Spring Boot libraries that set up HTTP clients for you. Ad
 `RestClient` (synchronous) or `WebClient` (reactive) bean. Add a starter to get a client already set up for a specific
 external system.
 
-**Java 25** · **Spring Boot 3.5.x** · **Maven Central:** `io.github.selimhorri` · **License:** MIT
+**Java 25** · **Spring Boot 4.1.x** · **Maven Central:** `io.github.selimhorri` · **License:** MIT
 
 ## Modules
 
@@ -70,7 +70,7 @@ my-app/
         <dependency>
             <groupId>io.github.selimhorri</groupId>
             <artifactId>tesseract-parent</artifactId>
-            <version>1.0.4</version>
+            <version>2.0.0</version>
             <type>pom</type>
             <scope>import</scope>
         </dependency>
@@ -122,7 +122,7 @@ submodule. The BOM doesn't manage starters, so the starter needs an explicit `<v
     <dependency>
         <groupId>io.github.selimhorri</groupId>
         <artifactId>tesseract-starter-jps</artifactId>
-        <version>1.0.4</version>
+        <version>2.0.0</version>
     </dependency>
 
     <!-- The communication style: tesseract-sync (RestClient) or tesseract-async (WebClient); version comes from the BOM -->
