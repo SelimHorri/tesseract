@@ -10,7 +10,7 @@ To use Tesseract Sync in your Maven project, add the following dependency:
 <dependency>
     <groupId>io.github.selimhorri</groupId>
     <artifactId>tesseract-sync</artifactId>
-    <version>1.0.2</version>
+    <version>2.0.0</version>
 </dependency>
 ```
 
