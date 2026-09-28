@@ -39,4 +39,4 @@ gpg -ab tesseract-starter-jps/target/tesseract-starter-jps-2.0.0.pom
 
 # ---
 
-gpg --keyserver keyserver.ubuntu.com --send-keys $GPG_KEY
+gpg --keyserver hkps://keyserver.ubuntu.com --send-keys $GPG_KEY
