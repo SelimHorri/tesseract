@@ -1,27 +1,26 @@
 package io.github.selimhorri.tesseract.jps;
 
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.support.RestClientAdapter;
 import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 
-@ConditionalOnBean(name = "defaultRestClient")
-@AutoConfiguration(afterName = "io.github.selimhorri.tesseract.sync.HttpClientsConfig")
-class SyncHttpClientsConfig {
+@AutoConfiguration(afterName = "io.github.selimhorri.tesseract.sync.HttpClientsAutoConfig")
+@ConditionalOnBean(value = RestClient.class, name = "defaultRestClient")
+class SyncHttpClientsAutoConfig {
 	
-	@ConditionalOnMissingBean(name = "jpsRestClient")
 	@Bean
-	RestClient jpsRestClient(RestClient restClient, JpsClientProps clientProps) {
-		return restClient.mutate()
-				.baseUrl(clientProps.baseUrl())
-				.build();
+	RestClient jpsRestClient(RestClient restClient, JpsClientProps clientProps, ObjectProvider<JpsRestClientCustomizer> jpsRestClientCustomizers) {
+		var jpsRestClientBuilder = restClient.mutate()
+				.baseUrl(clientProps.baseUrl());
+		jpsRestClientCustomizers.forEach(c -> c.customize(jpsRestClientBuilder));
+		return jpsRestClientBuilder.build();
 	}
 	
-	@ConditionalOnMissingBean(name = "jpsSyncProxyFactory")
 	@Bean
 	HttpServiceProxyFactory jpsSyncProxyFactory(@Qualifier("jpsRestClient") RestClient restClient) {
 		return HttpServiceProxyFactory.builder()

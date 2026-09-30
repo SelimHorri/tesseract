@@ -14,6 +14,9 @@ To use Tesseract Sync in your Maven project, add the following dependency:
 </dependency>
 ```
 
+Use the latest version, currently `2.0.0` (Spring Boot 4). On Spring Boot 3.5, use the 1.x line instead. See
+[Versions and Spring Boot compatibility](../../README.md#versions-and-spring-boot-compatibility).
+
 ## Features
 
 - **Auto-Configured `RestClient`**: Automatically sets up a `@Primary` `RestClient` bean using settings from Tesseract Core.
@@ -24,10 +27,14 @@ To use Tesseract Sync in your Maven project, add the following dependency:
 
 The following beans are automatically configured and available for injection:
 
-1.  **`RestClient`**: A primary bean configured with custom timeouts, HTTP version, and SSL settings.
+1.  **`RestClient`**: A primary bean configured with custom timeouts and HTTP version.
 2.  **`HttpServiceProxyFactory`**: Configured with a `RestClientAdapter` for creating synchronous HTTP interface proxies.
 
 ## Infrastructure and Configuration
+
+The snippets below show the 1.x implementation (Spring Boot 3.5). These beans aren't guarded by
+`@ConditionalOnMissingBean`. To customize `defaultRestClient`, declare a Spring Boot `RestClientCustomizer` bean. See
+[Customizing the clients](../../README.md#customizing-the-clients).
 
 ### `RestClient` Configuration
 The library configures the `RestClient` using the standard Spring Boot `RestClient.Builder` and the JDK-based request factory:
@@ -43,7 +50,7 @@ RestClient defaultRestClient(RestClient.Builder restClientBuilder, HttpClientPro
                                     ? HttpClient.Version.HTTP_1_1
                                     : HttpClient.Version.HTTP_2)
                             .build())
-                    .build(HttpClientSettings.defaults()
+                    .build(ClientHttpRequestFactorySettings.defaults()
                             .withConnectTimeout(clientProps.connectTimeout())
                             .withReadTimeout(clientProps.readTimeout())))
             .build();
@@ -56,7 +63,7 @@ A proxy factory is provided to enable declarative HTTP clients:
 ```java
 @Primary
 @Bean
-HttpServiceProxyFactory syncProxyFactory(RestClient restClient) {
+HttpServiceProxyFactory defaultSyncProxyFactory(RestClient restClient) {
     return HttpServiceProxyFactory.builder()
             .exchangeAdapter(RestClientAdapter.create(restClient))
             .build();

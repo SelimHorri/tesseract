@@ -4,7 +4,22 @@ Tesseract is a set of Spring Boot libraries that set up HTTP clients for you. Ad
 `RestClient` (synchronous) or `WebClient` (reactive) bean. Add a starter to get a client already set up for a specific
 external system.
 
-**Java 25** · **Spring Boot 4.1.x** · **Maven Central:** `io.github.selimhorri` · **License:** MIT
+**Java 25** · **Spring Boot 4.x** (Tesseract 2.x) or **3.5.x** (Tesseract 1.x) · **Maven Central:**
+`io.github.selimhorri` · **License:** MIT
+
+## Versions and Spring Boot compatibility
+
+**Use the latest Tesseract version, currently `2.0.0`.** Pick the 1.x line only if your application still runs on
+Spring Boot 3.5.
+
+| Tesseract                 | Spring Boot | When to use it                                        |
+|---------------------------|-------------|-------------------------------------------------------|
+| **2.x** (latest: `2.0.0`) | 4.x         | **Default.** New projects and anything on Boot 4.     |
+| 1.x (latest: `1.1.0`)     | 3.5.x       | Applications that haven't moved to Spring Boot 4 yet. |
+
+Use the same Tesseract version for every Tesseract artifact in a project (the `tesseract-parent` BOM and every
+starter). A 1.x starter won't work with 2.x core modules, and a 2.x starter won't work with 1.x core modules. The
+examples below use `2.0.0`. On Spring Boot 3.5, replace it with `1.1.0`.
 
 ## Modules
 
@@ -40,8 +55,7 @@ one of them yourself:
 - `tesseract-sync` on the classpath gives you the starter's `RestClient` beans.
 - `tesseract-async` on the classpath gives you the starter's `WebClient` beans.
 
-Every bean is guarded by `@ConditionalOnMissingBean`, so you can replace any of them by declaring a bean with the same
-name.
+See [Customizing the clients](#customizing-the-clients) to change what these beans do.
 
 ## Getting started
 
@@ -70,7 +84,7 @@ my-app/
         <dependency>
             <groupId>io.github.selimhorri</groupId>
             <artifactId>tesseract-parent</artifactId>
-            <version>2.0.0</version>
+            <version>2.0.0</version> <!-- 1.x on Spring Boot 3.5 -->
             <type>pom</type>
             <scope>import</scope>
         </dependency>
@@ -122,7 +136,7 @@ submodule. The BOM doesn't manage starters, so the starter needs an explicit `<v
     <dependency>
         <groupId>io.github.selimhorri</groupId>
         <artifactId>tesseract-starter-jps</artifactId>
-        <version>2.0.0</version>
+        <version>2.0.0</version> <!-- same version as the BOM; 1.x on Spring Boot 3.5 -->
     </dependency>
 
     <!-- The communication style: tesseract-sync (RestClient) or tesseract-async (WebClient); version comes from the BOM -->
@@ -159,6 +173,63 @@ class JpsClientsConfig {
 With `tesseract-async`, inject `jpsWebClient` or `jpsAsyncProxyFactory` instead, and return `Mono`/`Flux` from your
 interface.
 
+## Customizing the clients
+
+> **Breaking changes.** Since `1.0.4` (and in every 2.x version), the default clients are no longer guarded by
+> `@ConditionalOnMissingBean`. Since `1.1.0`, the JPS starter's clients aren't guarded by it either. You can't replace
+> those beans by declaring a bean with the same name any more. Spring Boot rejects the duplicate at startup with a
+> `BeanDefinitionOverrideException`. Use the customizers below instead.
+
+### Default clients (`tesseract-sync` / `tesseract-async`)
+
+`defaultRestClient` and `defaultWebClient` are built from Spring Boot's auto-configured `RestClient.Builder` /
+`WebClient.Builder`. To add headers, interceptors, filters or message converters, declare a Spring Boot
+`RestClientCustomizer` or `WebClientCustomizer` bean:
+
+```java
+
+@Bean
+RestClientCustomizer correlationIdCustomizer() {
+	return builder -> builder.requestInterceptor(new CorrelationIdInterceptor());
+}
+```
+
+Tesseract sets the request factory (sync) or connector (async) itself, using `tesseract.main.client.*`. A customizer
+that sets its own request factory or connector gets overwritten.
+
+To take over completely, exclude the autoconfiguration and declare your own client. Name it `defaultRestClient` /
+`defaultWebClient` so starters still pick it up:
+
+```properties
+spring.autoconfigure.exclude=io.github.selimhorri.tesseract.sync.HttpClientsAutoConfig
+# or: io.github.selimhorri.tesseract.async.HttpClientsAutoConfig
+```
+
+In `2.0.0` these classes are still named `io.github.selimhorri.tesseract.sync.HttpClientsConfig` /
+`io.github.selimhorri.tesseract.async.HttpClientsConfig`.
+
+### Starter clients
+
+Each starter builds its client by calling `mutate()` on the default client and setting the system's base URL. It then
+applies every customizer bean of the starter's type, in order:
+
+| Starter | Sync customizer               | Async customizer             | Beans replaceable by name?                |
+|---------|-------------------------------|------------------------------|-------------------------------------------|
+| JPS     | `JpsRestClientCustomizer`     | `JpsWebClientCustomizer`     | No, since `1.1.0` (yes in `2.0.0`)        |
+| ZITADEL | `ZitadelRestClientCustomizer` | `ZitadelWebClientCustomizer` | Yes (`@ConditionalOnMissingBean` by name) |
+
+```java
+
+@Bean
+JpsRestClientCustomizer jpsApiKeyCustomizer() {
+	return builder -> builder.defaultHeader("X-Api-Key", "...");
+}
+```
+
+A starter customizer only affects that starter's client. The default client stays as it is.
+
+> In `2.0.0`, `JpsRestClientCustomizer` / `JpsWebClientCustomizer` exist but aren't applied yet.
+
 ## Configuration
 
 ```yaml
@@ -188,8 +259,7 @@ tesseract:
 | JPS     | `jpsRestClient`, `jpsSyncProxyFactory`                                     | `jpsWebClient`, `jpsAsyncProxyFactory`                                      |
 | ZITADEL | `zitadelRestClient`, `zitadelSyncProxyFactory`, `tokenRetrieverSyncClient` | `zitadelWebClient`, `zitadelAsyncProxyFactory`, `tokenRetrieverAsyncClient` |
 
-The ZITADEL starter also lets you tweak its client builder by declaring `ZitadelRestClientCustomizer` /
-`ZitadelWebClientCustomizer` beans.
+To change these beans, see [Customizing the clients](#customizing-the-clients).
 
 ## Building from source
 
@@ -201,8 +271,14 @@ mvn -B package --file tesseract-starter-jps/pom.xml
 mvn -B package --file tesseract-starter-zitadel/pom.xml
 ```
 
-Build `tesseract-parent` (and install it locally with `mvn install`) before building a starter against an unreleased
-version. Spotless formats sources automatically during `compile`.
+Build `tesseract-parent` and install it locally before building a starter against an unreleased version. Without the
+release GPG key, skip signing:
+
+```bash
+mvn -B install -Dgpg.skip --file tesseract-parent/pom.xml
+```
+
+Spotless formats sources automatically during `compile`.
 
 ## License
 

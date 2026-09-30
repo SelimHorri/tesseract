@@ -15,6 +15,9 @@ To use Tesseract Async in your Maven project, add the following dependency:
 </dependency>
 ```
 
+Use the latest version, currently `2.0.0` (Spring Boot 4). On Spring Boot 3.5, use the 1.x line instead. See
+[Versions and Spring Boot compatibility](../../README.md#versions-and-spring-boot-compatibility).
+
 ## Features
 
 - **Auto-Configured `WebClient`**: Automatically sets up a `@Primary` `WebClient` bean using settings from Tesseract Core.
@@ -25,10 +28,14 @@ To use Tesseract Async in your Maven project, add the following dependency:
 
 The following beans are automatically configured and available for injection:
 
-1.  **`WebClient`**: A primary reactive bean configured with custom timeouts, HTTP version, and SSL settings.
+1.  **`WebClient`**: A primary reactive bean configured with custom timeouts and HTTP version.
 2.  **`HttpServiceProxyFactory`**: Configured with a `WebClientAdapter` for creating asynchronous HTTP interface proxies.
 
 ## Infrastructure and Configuration
+
+The snippets below show the 1.x implementation (Spring Boot 3.5). These beans aren't guarded by
+`@ConditionalOnMissingBean`. To customize `defaultWebClient`, declare a Spring Boot `WebClientCustomizer` bean. See
+[Customizing the clients](../../README.md#customizing-the-clients).
 
 ### `WebClient` Configuration
 The library configures the `WebClient` using the standard Spring Boot `WebClient.Builder` and the JDK-based `ClientHttpConnector`:
@@ -44,7 +51,7 @@ WebClient defaultWebClient(WebClient.Builder webClientBuilder, HttpClientProps c
                                     ? HttpClient.Version.HTTP_1_1
                                     : HttpClient.Version.HTTP_2)
                             .build())
-                    .build(HttpClientSettings.defaults()
+                    .build(ClientHttpConnectorSettings.defaults()
                             .withConnectTimeout(clientProps.connectTimeout())
                             .withReadTimeout(clientProps.readTimeout())))
             .build();
@@ -57,7 +64,7 @@ A reactive-capable proxy factory is provided:
 ```java
 @Primary
 @Bean
-HttpServiceProxyFactory asyncProxyFactory(WebClient webClient) {
+HttpServiceProxyFactory defaultAsyncProxyFactory(WebClient webClient) {
     return HttpServiceProxyFactory.builder()
             .exchangeAdapter(WebClientAdapter.create(webClient))
             .build();

@@ -6,11 +6,11 @@
     <parent>
         <groupId>io.github.selimhorri</groupId>
         <artifactId>tesseract-parent</artifactId>
-        <version>2.0.0</version>
+        <version>1.1.0-SNAPSHOT</version>
     </parent>
     <artifactId>tesseract-async</artifactId>
     <name>tesseract-async</name>
-    <description>Tesseract Sync Library for easily creating asynchronous Spring HTTP Clients</description>
+    <description>Tesseract Async Library for easily creating asynchronous Spring HTTP Clients</description>
     <packaging>jar</packaging>
 
     <url>https://github.com/SelimHorri/tesseract</url>
@@ -32,35 +32,12 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-webclient</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webflux</artifactId>
             <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator-test</artifactId>
-            <scope>test</scope>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-validation-test</artifactId>
-            <scope>test</scope>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-webclient-test</artifactId>
-            <scope>test</scope>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-webflux-test</artifactId>
+            <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
             <optional>true</optional>
         </dependency>

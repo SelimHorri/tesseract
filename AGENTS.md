@@ -8,16 +8,20 @@ Tesseract is a modular Spring Boot library that standardizes HTTP client configu
 `RestClient` (synchronous) and `WebClient` (reactive) beans. Consumers turn them on by choosing which dependency to put
 on their classpath.
 
-**Java 25** | **Spring Boot 4.1.1** | **Maven** | Version **2.0.0** | Published to Maven Central under
+**Java 25** | **Spring Boot 3.5.16** | **Maven** | Version **1.1.0** | Published to Maven Central under
 `io.github.selimhorri`
+
+Two release lines exist. **1.x** targets Spring Boot 3.5. **2.x** targets
+Spring Boot 4 and is the default recommended to consumers. Don't bring Boot 4 APIs (for example `HttpClientSettings`,
+`spring-boot-starter-restclient`) into 1.x.
 
 ## Repository Layout
 
 ```
 tesseract-parent/              Multi-module POM (packaging pom); also acts as a BOM for core/sync/async
   tesseract-core/              HttpClientProps + DefaultHttpClientProps, HttpClientEnablingConfig
-  tesseract-sync/              io.github.selimhorri.tesseract.sync.HttpClientsConfig (RestClient)
-  tesseract-async/             io.github.selimhorri.tesseract.async.HttpClientsConfig (WebClient)
+  tesseract-sync/              io.github.selimhorri.tesseract.sync.HttpClientsAutoConfig (RestClient)
+  tesseract-async/             io.github.selimhorri.tesseract.async.HttpClientsAutoConfig (WebClient)
 tesseract-starter-jps/         Standalone project; imports tesseract-parent as a BOM
 tesseract-starter-zitadel/     Standalone project; WIP, listed in .gitignore, disabled in CI
 .github/workflows/maven.yml    CI
@@ -33,6 +37,7 @@ mvn -B package --file tesseract-parent/pom.xml
 
 # Install core modules locally (needed before building a starter against an unreleased version)
 mvn -B install --file tesseract-parent/pom.xml
+#mvn -B install -Dgpg.skip --file tesseract-parent/pom.xml
 
 # Build individual starters
 mvn -B package --file tesseract-starter-jps/pom.xml
@@ -41,6 +46,7 @@ mvn -B package --file tesseract-starter-zitadel/pom.xml
 # Run tests for a specific module
 mvn test -f tesseract-parent/pom.xml
 mvn test -f tesseract-starter-jps/pom.xml
+#mvn test -f tesseract-starter-zitadel/pom.xml
 
 # Run a single test class
 mvn test -f tesseract-parent/tesseract-core/pom.xml -Dtest=DefaultHttpClientPropsValidationTest
@@ -89,24 +95,27 @@ consumer picks sync or async by adding one of them. The starter's config classes
 ```java
 
 @ConditionalOnBean(name = "defaultRestClient")
-@AutoConfiguration(afterName = "io.github.selimhorri.tesseract.sync.HttpClientsConfig")
-class SyncHttpClientsConfig { ...
+@AutoConfiguration(afterName = "io.github.selimhorri.tesseract.sync.HttpClientsAutoConfig")
+class SyncHttpClientsAutoConfig { ...
 }
 
 @ConditionalOnBean(name = "defaultWebClient")
-@AutoConfiguration(afterName = "io.github.selimhorri.tesseract.async.HttpClientsConfig")
-class AsyncHttpClientsConfig { ...
+@AutoConfiguration(afterName = "io.github.selimhorri.tesseract.async.HttpClientsAutoConfig")
+class AsyncHttpClientsAutoConfig { ...
 }
 ```
 
 Use `afterName` (a string), not `after = Class`. The sync/async config classes are package-private and may be missing
-from the classpath.
+from the classpath. Spring silently ignores an `afterName` that doesn't resolve, so every starter has an
+`afterNameShouldReferenceExistingClasses` test. Update the strings whenever a sync/async config class is renamed.
 
 ### Key Patterns
 
 - **Configuration properties** are Java records with `@ConfigurationProperties`, `@Validated` and `@DefaultValue`.
-- **Bean overrides**: every bean uses `@ConditionalOnMissingBean(name = "<beanName>")`, so consumers can replace it by
-  name.
+- **Bean overrides**: the default clients (since 1.0.4) and the JPS beans (since 1.1.0) are **not** guarded by
+  `@ConditionalOnMissingBean`. A consumer bean with the same name fails startup with `BeanDefinitionOverrideException`.
+  Consumers customize them through Spring Boot's `RestClientCustomizer` / `WebClientCustomizer` (default clients) and
+  the starter customizers. ZITADEL beans still use `@ConditionalOnMissingBean(name = "<beanName>")`.
 - **Qualifiers**: starter beans that consume a system-specific client inject it with
   `@Qualifier("<system>RestClient")` / `@Qualifier("<system>WebClient")`. Unqualified injection resolves to the
   `@Primary` default client.
@@ -114,11 +123,14 @@ from the classpath.
   interfaces and client interfaces are public.
 - **Autoconfiguration discovery**: each module lists its config classes in
   `src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports`.
-- **Customizer pattern**: `ZitadelRestClientCustomizer` / `ZitadelWebClientCustomizer` are `@FunctionalInterface`s
-  injected as `ObjectProvider<T>` and applied to the mutated builder. `JpsRestClientCustomizer` /
-  `JpsWebClientCustomizer` exist but are **not yet wired** into the JPS configs.
+- **Customizer pattern**: `JpsRestClientCustomizer` / `JpsWebClientCustomizer` and `ZitadelRestClientCustomizer` /
+  `ZitadelWebClientCustomizer` are `@FunctionalInterface`s injected as `ObjectProvider<T>` and applied to the mutated
+  builder after the base URL is set.
 - **Testing**: `ApplicationContextRunner` with `AutoConfigurations.of(...)` checks context loading, bean presence and
-  property binding without starting a full application.
+  property binding without starting a full application. Starter tests don't hit the network. A customizer installs a
+  capturing `ClientHttpRequestInterceptor` (sync) or `ExchangeFunction` (async) to check the base URL and customizers.
+  The tests also load the real sync/async autoconfig with `Class.forName(...)`, because those classes are
+  package-private.
 
 ### Property Prefix Convention
 
@@ -159,11 +171,13 @@ Pattern: `<system>RestClient` / `<system>WebClient`, `<system>SyncProxyFactory` 
    setup and `spotless-eclipse-formatter.xml`.
 3. Create a public `<Name>ClientProps` record with `@ConfigurationProperties(prefix = "tesseract.<name>")` and
    `@Validated`.
-4. Create a package-private `SyncHttpClientsConfig` annotated with `@ConditionalOnBean(name = "defaultRestClient")` and
-   `@AutoConfiguration(afterName = "io.github.selimhorri.tesseract.sync.HttpClientsConfig")`. It exposes
+4. Create a package-private `SyncHttpClientsAutoConfig` annotated with `@ConditionalOnBean(name = "defaultRestClient")`
+   and
+   `@AutoConfiguration(afterName = "io.github.selimhorri.tesseract.sync.HttpClientsAutoConfig")`. It exposes
    `<name>RestClient` and `<name>SyncProxyFactory`.
-5. Create a package-private `AsyncHttpClientsConfig` annotated with `@ConditionalOnBean(name = "defaultWebClient")` and
-   `@AutoConfiguration(afterName = "io.github.selimhorri.tesseract.async.HttpClientsConfig")`. It exposes
+5. Create a package-private `AsyncHttpClientsAutoConfig` annotated with `@ConditionalOnBean(name = "defaultWebClient")`
+   and
+   `@AutoConfiguration(afterName = "io.github.selimhorri.tesseract.async.HttpClientsAutoConfig")`. It exposes
    `<name>WebClient` and `<name>AsyncProxyFactory`.
 6. Optionally add `<Name>RestClientCustomizer` / `<Name>WebClientCustomizer` interfaces and apply them through
    `ObjectProvider`.
@@ -171,8 +185,8 @@ Pattern: `<system>RestClient` / `<system>WebClient`, `<system>SyncProxyFactory` 
    `@EnableConfigurationProperties(<Name>ClientProps.class)`.
 8. Register all three config classes in
    `META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports`.
-9. Add `ApplicationContextRunner`-based tests: beans absent without a default client, present with one, and props
-   binding.
+9. Add `ApplicationContextRunner`-based tests: beans absent without a default client, present with one, props binding,
+   base URL and customizers applied, wiring against the real sync/async autoconfig, and `afterName` resolution.
 10. Add a build step to `.github/workflows/maven.yml`.
 
 ## CI

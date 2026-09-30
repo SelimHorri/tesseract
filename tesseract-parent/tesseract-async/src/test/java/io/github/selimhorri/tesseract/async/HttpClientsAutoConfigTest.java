@@ -11,7 +11,7 @@ import java.time.Duration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class HttpClientsConfigTest {
+class HttpClientsAutoConfigTest {
 	
 	private static HttpClientProps propsWithDefaults() {
 		return new HttpClientProps() {
@@ -93,10 +93,10 @@ class HttpClientsConfigTest {
 	
 	private final ApplicationContextRunner contextRunner = new ApplicationContextRunner()
 			.withBean(WebClient.Builder.class, WebClient::builder)
-			.withConfiguration(AutoConfigurations.of(HttpClientsConfig.class));
+			.withConfiguration(AutoConfigurations.of(HttpClientsAutoConfig.class));
 	
 	private ApplicationContextRunner withDefaultProps() {
-		return contextRunner.withBean(HttpClientProps.class, HttpClientsConfigTest::propsWithDefaults);
+		return contextRunner.withBean(HttpClientProps.class, HttpClientsAutoConfigTest::propsWithDefaults);
 	}
 	
 	@Test
