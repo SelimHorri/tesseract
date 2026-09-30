@@ -4,9 +4,9 @@ import io.github.selimhorri.tesseract.core.HttpClientProps;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.boot.autoconfigure.web.client.RestClientAutoConfiguration;
 import org.springframework.boot.http.client.ClientHttpRequestFactoryBuilder;
-import org.springframework.boot.http.client.ClientHttpRequestFactorySettings;
+import org.springframework.boot.http.client.HttpClientSettings;
+import org.springframework.boot.restclient.autoconfigure.RestClientAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.web.client.RestClient;
@@ -30,7 +30,7 @@ class HttpClientsAutoConfig {
 										? HttpClient.Version.HTTP_1_1
 										: HttpClient.Version.HTTP_2)
 								.build())
-						.build(ClientHttpRequestFactorySettings.defaults()
+						.build(HttpClientSettings.defaults()
 								.withConnectTimeout(clientProps.connectTimeout())
 								.withReadTimeout(clientProps.readTimeout())))
 				.build();
