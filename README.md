@@ -136,7 +136,7 @@ submodule. The BOM doesn't manage starters, so the starter needs an explicit `<v
     <dependency>
         <groupId>io.github.selimhorri</groupId>
         <artifactId>tesseract-starter-jps</artifactId>
-        <version>2.0.0</version> <!-- same version as the BOM; 1.x on Spring Boot 3.5 -->
+        <version>2.1.0</version> <!-- same version as the BOM; 1.x on Spring Boot 3.5 -->
     </dependency>
 
     <!-- The communication style: tesseract-sync (RestClient) or tesseract-async (WebClient); version comes from the BOM -->
