@@ -84,7 +84,7 @@ my-app/
         <dependency>
             <groupId>io.github.selimhorri</groupId>
             <artifactId>tesseract-parent</artifactId>
-            <version>2.0.0</version> <!-- 1.x on Spring Boot 3.5 -->
+            <version>2.1.0</version> <!-- 1.1.x on Spring Boot 3.5 -->
             <type>pom</type>
             <scope>import</scope>
         </dependency>
